@@ -8,6 +8,11 @@ spring:
     zookeeper:
       connect-string: 8.129.53.24:2181
 
+  # 上传单个文件总的最大值=10MB
+  servlet:
+      multipart:
+        max-file-size: 10MB
+
   datasource:
 #   数据源基本配置
     username: root
@@ -33,10 +38,12 @@ spring:
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
 
+
 mybatis:
   # 指定全局配置文件位置
   config-location: classpath:mybatis/mybatis-config.xml
   # 指定sql映射文件位置
   mapper-locations: classpath:mybatis/mapper/*.xml
+
 
 
