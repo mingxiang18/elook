@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="elook-product" />
+        <module name="elook-test" />
+        <module name="elook-test-customer" />
+        <module name="elook-common" />
+        <module name="elook-user" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="8">
+      <module name="elook-common" target="12" />
+      <module name="elook-parent" target="12" />
+      <module name="elook-product" target="12" />
+      <module name="elook-test" target="12" />
+      <module name="elook-test-customer" target="12" />
+      <module name="elook-user" target="12" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="elook-common" options="-parameters" />
+      <module name="elook-product" options="-parameters" />
+      <module name="elook-test" options="-parameters" />
+      <module name="elook-test-customer" options="-parameters" />
+      <module name="elook-user" options="-parameters" />
+    </option>
+  </component>
+</project>
