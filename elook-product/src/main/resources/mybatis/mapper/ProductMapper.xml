@@ -60,4 +60,8 @@
     <select id="getProductCategoryById" resultType="cn.elook.common.entity.ProductCategory">
         SELECT * FROM product_category WHERE pcid = #{pcid}
     </select>
+
+    <select id="getProductCategoryByParentId" resultType="cn.elook.common.entity.ProductCategory">
+        SELECT * FROM product_category WHERE parent_id = #{parentId}
+    </select>
 </mapper>

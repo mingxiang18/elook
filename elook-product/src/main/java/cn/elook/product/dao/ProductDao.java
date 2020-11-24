@@ -33,5 +33,7 @@ public interface ProductDao {
     List<ProductDiscuss> getProductDiscussByPid(Long pid);
 
     //获取商品分类
-    List<ProductCategory> getProductCategoryById(Long pcid);
+    List<ProductCategory> getProductCategoryByParentId(Long parentId);
+    //通过主键获取商品分类
+    ProductCategory getProductCategoryById(Long pcid);
 }

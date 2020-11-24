@@ -1,6 +1,7 @@
 package cn.elook.product.controller;
 
 import cn.elook.common.entity.Product;
+import cn.elook.common.utils.CommonResult;
 import cn.elook.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,17 +16,17 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/mall")
-    public List<Product> getMall(){
+    public CommonResult getMall(){
         return productService.getMall();
     }
 
     @GetMapping("/product/{pid}")
-    public Product getProductById(@PathVariable("pid") Long pid){
+    public CommonResult getProductById(@PathVariable("pid") Long pid){
         return productService.getProductById(pid);
     }
 
     @GetMapping("/product/search")
-    List<Product> getProductByCondition(String productKey, Long pcid){
+    public CommonResult getProductByCondition(String productKey, Long pcid){
         return productService.getProductByCondition(productKey,pcid);
     }
 }

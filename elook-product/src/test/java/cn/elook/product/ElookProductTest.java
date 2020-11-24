@@ -4,6 +4,7 @@ import cn.elook.common.entity.Product;
 import cn.elook.common.entity.ProductCategory;
 import cn.elook.common.entity.ProductDiscuss;
 import cn.elook.common.entity.ProductPhoto;
+import cn.elook.common.utils.CommonResult;
 import cn.elook.product.service.ProductService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,20 +24,20 @@ public class ElookProductTest {
 
     @Test
     public void test0() {
-        List<Product> productList = productService.getMall();
-        System.out.println(productList.size()+"  "+productList.get(0).getProductName());
+        CommonResult productList = productService.getMall();
+        System.out.println();
     }
 
     @Test
     public void test1() {
-        Product product = productService.getProductById(1l);
-        System.out.println(product.getProductName());
+        CommonResult product = productService.getProductById(1l);
+        System.out.println();
     }
 
     @Test
     public void test2() {
-        List<Product> productList = productService.getProductByCondition(null,1l);
-        System.out.println(productList.size()+"  "+productList.get(0).getProductName());
+        CommonResult productList = productService.getProductByCondition(null,1l);
+        System.out.println();
     }
 
     @Test
@@ -48,14 +49,14 @@ public class ElookProductTest {
         product.setIfSold(0);
         product.setUid(1l);
 
-        int result = productService.addProduct(product);
+        CommonResult result = productService.addProduct(product);
         System.out.println(result);
     }
 
     @Test
     public void test4() {
 
-        int result = productService.rackProduct(3l);
+        CommonResult result = productService.rackProduct(3l);
         System.out.println(result);
     }
 
@@ -67,26 +68,26 @@ public class ElookProductTest {
         productDiscuss.setPdCreateTime(new Date());
         productDiscuss.setUid(1l);
 
-        int result = productService.addProductDiscuss(productDiscuss);
+        CommonResult result = productService.addProductDiscuss(productDiscuss);
         System.out.println(result);
     }
 
     @Test
     public void test6() {
-        int result = productService.deleteProductDiscuss(1l);
+        CommonResult result = productService.deleteProductDiscuss(1l);
         System.out.println(result);
     }
 
     @Test
     public void test7() {
-        List<ProductDiscuss> discuss = productService.getProductDiscussByPid(1l);
-        System.out.println(discuss.size()+"   "+discuss.get(0).getPdDiscuss());
+        CommonResult discuss = productService.getProductDiscussByPid(1l);
+        System.out.println();
     }
 
     @Test
     public void test8() {
-        List<ProductCategory> categoryList = productService.getProductCategoryById(1l);
-        System.out.println(categoryList.size()+"   "+categoryList.get(0).getCategoryName());
+        CommonResult categoryList = productService.getProductCategoryById(1l);
+        System.out.println();
     }
 
     @Test
@@ -94,13 +95,13 @@ public class ElookProductTest {
         ProductPhoto productPhoto = new ProductPhoto();
         productPhoto.setPid(1l);
         productPhoto.setProductSrc("http://8.129.53.24:8888/group1/M00/00/00/rBMbxV-7LZuAPk8DAAqNY_2fplY382.jpg");
-        int result = productService.addProductPhoto(productPhoto);
+        CommonResult result = productService.addProductPhoto(productPhoto);
         System.out.println(result);
     }
 
     @Test
     public void test10() {
-        List<ProductPhoto> photoList = productService.getProductPhotoByPid(1l);
-        System.out.println(photoList.size()+"   "+photoList.get(0).getProductSrc());
+        CommonResult photoList = productService.getProductPhotoByPid(1l);
+        System.out.println();
     }
 }

@@ -4,34 +4,37 @@ import cn.elook.common.entity.Product;
 import cn.elook.common.entity.ProductCategory;
 import cn.elook.common.entity.ProductDiscuss;
 import cn.elook.common.entity.ProductPhoto;
+import cn.elook.common.utils.CommonResult;
 
 import java.util.List;
 
 public interface ProductService {
     //获取首页商品信息
-    List<Product> getMall();
+    CommonResult getMall();
 
     //通过id获取商品
-    Product getProductById(Long pid);
+    CommonResult getProductById(Long pid);
     //搜索商品，筛选商品
-    List<Product> getProductByCondition(String productKey, Long pcid);
+    CommonResult getProductByCondition(String productKey, Long pcid);
     //添加商品
-    int addProduct(Product product);
+    CommonResult addProduct(Product product);
     //下架商品
-    int rackProduct(Long pid);
+    CommonResult rackProduct(Long pid);
 
     //添加商品图片
-    int addProductPhoto(ProductPhoto productPhoto);
+    CommonResult addProductPhoto(ProductPhoto productPhoto);
     //获取商品图片
-    List<ProductPhoto> getProductPhotoByPid(Long pid);
+    CommonResult getProductPhotoByPid(Long pid);
 
     //添加商品讨论
-    int addProductDiscuss(ProductDiscuss productDiscuss);
+    CommonResult addProductDiscuss(ProductDiscuss productDiscuss);
     //删除商品讨论
-    int deleteProductDiscuss(Long pdid);
+    CommonResult deleteProductDiscuss(Long pdid);
     //获取商品下所有商品讨论
-    List<ProductDiscuss> getProductDiscussByPid(Long pid);
+    CommonResult getProductDiscussByPid(Long pid);
 
     //获取商品分类
-    List<ProductCategory> getProductCategoryById(Long pcid);
+    CommonResult getProductCategoryByParentId(Long parentId);
+    //通过主键获取商品分类
+    CommonResult getProductCategoryById(Long pcid);
 }
