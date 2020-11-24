@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.elook.test.mapper.TestMapper">
+
+    <select id="getTestById" resultType="cn.elook.common.bean.TestBean">
+        SELECT * FROM test WHERE id=#{id}
+    </select>
+
+    <insert id="insertTest" parameterType="cn.elook.common.bean.TestBean" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO test(tname,content) VALUES (#{tname},#{content});
+    </insert>
+
+</mapper>

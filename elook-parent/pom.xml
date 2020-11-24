@@ -6,9 +6,12 @@
 	<modules>
 		<module>../elook-test</module>
 		<module>../elook-common</module>
+		<module>../elook-test</module>
 		<module>../elook-test-customer</module>
         <module>../elook-product</module>
-    </modules>
+		<module>../elook-indent</module>
+		<module>../elook-user</module>
+	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
