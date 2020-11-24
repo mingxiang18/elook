@@ -13,6 +13,8 @@ public class TestController {
     @Autowired
     private TestService testService;
 
+    private TestBean testBean;
+
     @Value("${server.port}")
     private String ServerPort;
 
