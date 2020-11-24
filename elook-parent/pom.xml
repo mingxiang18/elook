@@ -8,7 +8,7 @@
 		<module>../elook-common</module>
 		<module>../elook-test-customer</module>
         <module>../elook-product</module>
-		<module>../elook-user</module>
+		<module>../elook-indent</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>

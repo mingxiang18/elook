@@ -12,13 +12,12 @@
         <option value="$PROJECT_DIR$/elook-test/pom.xml" />
         <option value="$PROJECT_DIR$/elook-common/pom.xml" />
         <option value="$PROJECT_DIR$/elook-parent/pom.xml" />
-        <option value="$PROJECT_DIR$/elook-product/pom.xml" />
         <option value="$PROJECT_DIR$/elook-test-customer/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
-        <option value="$PROJECT_DIR$/elook-parent/elook-user/pom.xml" />
+        <option value="$PROJECT_DIR$/elook-parent/elook-page/pom.xml" />
       </set>
     </option>
   </component>
