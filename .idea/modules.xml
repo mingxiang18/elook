@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/elook-product/elook-product.iml" filepath="$PROJECT_DIR$/elook-product/elook-product.iml" />
       <module fileurl="file://$PROJECT_DIR$/elook-test/elook-test.iml" filepath="$PROJECT_DIR$/elook-test/elook-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/elook-test-customer/elook-test-customer.iml" filepath="$PROJECT_DIR$/elook-test-customer/elook-test-customer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elook-user/elook-user.iml" filepath="$PROJECT_DIR$/elook-user/elook-user.iml" />
     </modules>
   </component>
 </project>

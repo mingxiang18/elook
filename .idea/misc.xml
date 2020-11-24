@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/elook-common/pom.xml" />
         <option value="$PROJECT_DIR$/elook-parent/pom.xml" />
         <option value="$PROJECT_DIR$/elook-test-customer/pom.xml" />
+        <option value="$PROJECT_DIR$/elook-user/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -21,5 +22,5 @@
       </set>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
 </project>
