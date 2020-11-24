@@ -26,7 +26,7 @@
         </where>
     </select>
 
-    <insert id="addProduct" parameterType="cn.elook.common.entity.Product" useGeneratedKeys="true" keyProperty="id">
+    <insert id="addProduct" parameterType="cn.elook.common.entity.Product" useGeneratedKeys="true" keyProperty="pid">
         INSERT INTO product(product_name,product_des,product_price,pcid,if_sold,uid)
         VALUES (#{productName},#{productDes},#{productPrice},#{pcid},#{ifSold},#{uid});
     </insert>

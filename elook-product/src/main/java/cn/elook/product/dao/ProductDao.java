@@ -32,7 +32,7 @@ public interface ProductDao {
     //获取商品下所有商品讨论
     List<ProductDiscuss> getProductDiscussByPid(Long pid);
 
-    //获取商品分类
+    //通过父分类id获取商品子分类
     List<ProductCategory> getProductCategoryByParentId(Long parentId);
     //通过主键获取商品分类
     ProductCategory getProductCategoryById(Long pcid);

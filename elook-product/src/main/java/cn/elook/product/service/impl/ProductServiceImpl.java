@@ -10,6 +10,7 @@ import cn.elook.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -48,13 +49,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public CommonResult addProduct(Product product) {
+    public CommonResult addProduct(Product product, ProductPhoto productPhoto) {
+        product.setIfSold(0);
         int result = productDao.addProduct(product);
-        if(result > 0){
-            return new CommonResult(200,"添加成功",result);
-        }else {
-            return new CommonResult(444,"添加商品失败");
+        if(result <= 0){
+            return new CommonResult(444,"添加商品失败",result);
         }
+        if(productPhoto != null && productPhoto.getProductSrc() != null){
+            productPhoto.setPid(product.getPid());
+            int result2 = productDao.addProductPhoto(productPhoto);
+            if (result2 <= 0){
+                return new CommonResult(444,"添加商品图片失败",result2);
+            }
+        }
+
+        return new CommonResult(200,"添加商品成功",result);
     }
 
     @Override
@@ -89,6 +98,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public CommonResult addProductDiscuss(ProductDiscuss productDiscuss) {
+        productDiscuss.setPdCreateTime(new Date());
         int result = productDao.addProductDiscuss(productDiscuss);
         if(result > 0){
             return new CommonResult(200,"商品留言成功",result);

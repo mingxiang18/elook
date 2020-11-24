@@ -49,8 +49,8 @@ public class ElookProductTest {
         product.setIfSold(0);
         product.setUid(1l);
 
-        CommonResult result = productService.addProduct(product);
-        System.out.println(result);
+        CommonResult result = productService.addProduct(product,null);
+        System.out.println(product.getPid());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class ElookProductTest {
     @Test
     public void test7() {
         CommonResult discuss = productService.getProductDiscussByPid(1l);
-        System.out.println();
+        System.out.println(discuss.getData());
     }
 
     @Test

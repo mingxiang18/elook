@@ -17,7 +17,7 @@ public interface ProductService {
     //搜索商品，筛选商品
     CommonResult getProductByCondition(String productKey, Long pcid);
     //添加商品
-    CommonResult addProduct(Product product);
+    CommonResult addProduct(Product product, ProductPhoto productPhoto);
     //下架商品
     CommonResult rackProduct(Long pid);
 
