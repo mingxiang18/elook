@@ -1,15 +1,23 @@
 package cn.elook.indent.service;
 
 import cn.elook.common.entity.Indent;
+import cn.elook.common.utils.CommonResult;
 
 import java.util.List;
 
 public interface IndentService {
-    public List<Indent> findAll();
 
-    public Indent findById(Integer oId);
+    public CommonResult findAll(Integer index, Integer pageSize, String sort);
 
-    public void saveIndent(Indent indent);
+    public CommonResult findById(String oId,Integer index,Integer pageSize,String sort);
 
-    public void deleteIndentById(Integer oId);
+    public CommonResult findByBuyerId(Long buyerId,Integer index,Integer pageSize,String sort);
+
+    public CommonResult findByVendorId(Long vendorId,Integer index,Integer pageSize,String sort);
+
+    public CommonResult saveIndent(Indent indent);
+
+    public CommonResult deleteIndentById(String oId);
+
+    public CommonResult updateIndent(Indent indent);
 }

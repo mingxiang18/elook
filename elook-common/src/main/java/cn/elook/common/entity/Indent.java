@@ -5,13 +5,13 @@ import java.util.Date;
 
 public class Indent implements Serializable {
     private String oId;
-    private Integer vendorId;
-    private Integer buyerId;
+    private Long vendorId;
+    private Long buyerId;
     private String address;
     private float indentPrice;
     private Date indentCreateTime;
     private Integer indentState;
-    private Integer pId;
+    private Long pId;
 
     public String getoId() {
         return oId;
@@ -21,19 +21,19 @@ public class Indent implements Serializable {
         this.oId = oId;
     }
 
-    public Integer getVendorId() {
+    public Long getVendorId() {
         return vendorId;
     }
 
-    public void setVendorId(Integer vendorId) {
+    public void setVendorId(Long vendorId) {
         this.vendorId = vendorId;
     }
 
-    public Integer getBuyerId() {
+    public Long getBuyerId() {
         return buyerId;
     }
 
-    public void setBuyerId(Integer buyerId) {
+    public void setBuyerId(Long buyerId) {
         this.buyerId = buyerId;
     }
 
@@ -69,11 +69,11 @@ public class Indent implements Serializable {
         this.indentState = indentState;
     }
 
-    public Integer getpId() {
+    public Long getpId() {
         return pId;
     }
 
-    public void setpId(Integer pId) {
+    public void setpId(Long pId) {
         this.pId = pId;
     }
 
