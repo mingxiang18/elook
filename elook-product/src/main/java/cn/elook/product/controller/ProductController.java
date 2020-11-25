@@ -1,17 +1,19 @@
 package cn.elook.product.controller;
 
 import cn.elook.common.entity.Product;
+import cn.elook.common.entity.ProductDetails;
 import cn.elook.common.entity.ProductDiscuss;
 import cn.elook.common.entity.ProductPhoto;
 import cn.elook.common.utils.CommonResult;
 import cn.elook.product.service.ProductService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@CrossOrigin
 public class ProductController {
     @Autowired
     private ProductService productService;
@@ -23,15 +25,21 @@ public class ProductController {
     }
 
     //通过id获取商品
-    @GetMapping("/product/{pid}")
-    public CommonResult getProductById(@PathVariable("pid") Long pid){
+    @GetMapping("/product/get")
+    public CommonResult getProductById(Long pid){
         return productService.getProductById(pid);
     }
 
     //搜索商品，productKey是关键字模糊查询，pcid是按分类查询
     @GetMapping("/product/search")
-    public CommonResult getProductByCondition(String productKey, Long pcid){
-        return productService.getProductByCondition(productKey,pcid);
+    public CommonResult getProductByCondition(String productKey, Long pcid, Integer index, Integer pageSize){
+        return productService.getProductByCondition(productKey,pcid,index,pageSize);
+    }
+
+    //获取所有商品详情
+    @GetMapping("/product/details")
+    public CommonResult getProductDetails(Integer index, Integer pageSize){
+        return productService.getProductDetails(index, pageSize);
     }
 
     //添加商品
@@ -59,20 +67,20 @@ public class ProductController {
     }
 
     //获取商品下所有商品讨论
-    @GetMapping("/product/discuss/{pid}")
-    public CommonResult getProductDiscussByPid(@PathVariable("pid") Long pid){
+    @GetMapping("/product/discuss")
+    public CommonResult getProductDiscussByPid(Long pid){
         return productService.getProductDiscussByPid(pid);
     }
 
     //通过父分类id获取所有商品子分类
-    @GetMapping("/product/category/parentId/{parentId}")
-    public CommonResult getProductCategoryByParentId(@PathVariable("parentId") Long parentId){
+    @GetMapping("/product/categoryByParent")
+    public CommonResult getProductCategoryByParentId(Long parentId){
         return productService.getProductCategoryByParentId(parentId);
     }
 
     //通过主键获取商品分类
-    @GetMapping("/product/category/{pcid}")
-    public CommonResult getProductCategoryById(@PathVariable("pcid") Long pcid){
+    @GetMapping("/product/category")
+    public CommonResult getProductCategoryById(Long pcid){
         return productService.getProductCategoryById(pcid);
     }
 }

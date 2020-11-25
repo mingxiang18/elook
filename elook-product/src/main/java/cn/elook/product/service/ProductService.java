@@ -1,10 +1,8 @@
 package cn.elook.product.service;
 
-import cn.elook.common.entity.Product;
-import cn.elook.common.entity.ProductCategory;
-import cn.elook.common.entity.ProductDiscuss;
-import cn.elook.common.entity.ProductPhoto;
+import cn.elook.common.entity.*;
 import cn.elook.common.utils.CommonResult;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,7 +13,9 @@ public interface ProductService {
     //通过id获取商品
     CommonResult getProductById(Long pid);
     //搜索商品，筛选商品
-    CommonResult getProductByCondition(String productKey, Long pcid);
+    CommonResult getProductByCondition(String productKey, Long pcid, Integer index, Integer pageSize);
+    //获取所有商品详情
+    CommonResult getProductDetails(@Param("index") Integer index, @Param("pageSize") Integer pageSize);
     //添加商品
     CommonResult addProduct(Product product, ProductPhoto productPhoto);
     //下架商品

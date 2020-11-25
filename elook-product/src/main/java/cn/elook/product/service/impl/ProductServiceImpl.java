@@ -1,9 +1,6 @@
 package cn.elook.product.service.impl;
 
-import cn.elook.common.entity.Product;
-import cn.elook.common.entity.ProductCategory;
-import cn.elook.common.entity.ProductDiscuss;
-import cn.elook.common.entity.ProductPhoto;
+import cn.elook.common.entity.*;
 import cn.elook.common.utils.CommonResult;
 import cn.elook.product.dao.ProductDao;
 import cn.elook.product.service.ProductService;
@@ -39,10 +36,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public CommonResult getProductByCondition(String productKey, Long pcid) {
-        List<Product> productList = productDao.getProductByCondition(productKey, pcid);
+    public CommonResult getProductByCondition(String productKey, Long pcid, Integer index, Integer pageSize) {
+        List<Product> productList = productDao.getProductByCondition(productKey, pcid, index, pageSize);
         if(productList != null){
             return new CommonResult(200,"查询成功",productList);
+        }else {
+            return new CommonResult(444,"无相应商品");
+        }
+    }
+
+    @Override
+    public CommonResult getProductDetails(Integer index, Integer pageSize) {
+        List<ProductDetails> productDetails = productDao.getProductDetails(index, pageSize);
+        if(productDetails != null){
+            return new CommonResult(200,"查询成功",productDetails);
         }else {
             return new CommonResult(444,"无相应商品");
         }
@@ -130,7 +137,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public CommonResult getProductCategoryByParentId(Long parentId) {
         List<ProductCategory> productCategoryList = productDao.getProductCategoryByParentId(parentId);
-        if (productCategoryList != null){
+        if (productCategoryList != null && productCategoryList.size() > 0){
             return new CommonResult(200,"获取分类标签成功",productCategoryList);
         }else {
             return new CommonResult(444,"无对应分类标签");

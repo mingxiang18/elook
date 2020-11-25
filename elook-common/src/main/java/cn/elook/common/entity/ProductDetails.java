@@ -1,6 +1,6 @@
 package cn.elook.common.entity;
 
-public class Product {
+public class ProductDetails {
     private Long pid;
 
     private String productName;
@@ -15,6 +15,22 @@ public class Product {
 
     private Long uid;
 
+    private String username;
+
+    @Override
+    public String toString() {
+        return "ProductDetails{" +
+                "pid=" + pid +
+                ", productName='" + productName + '\'' +
+                ", productDes='" + productDes + '\'' +
+                ", productPrice=" + productPrice +
+                ", pcid=" + pcid +
+                ", ifSold=" + ifSold +
+                ", uid=" + uid +
+                ", username='" + username + '\'' +
+                '}';
+    }
+
     public Long getPid() {
         return pid;
     }
@@ -28,7 +44,7 @@ public class Product {
     }
 
     public void setProductName(String productName) {
-        this.productName = productName == null ? null : productName.trim();
+        this.productName = productName;
     }
 
     public String getProductDes() {
@@ -36,7 +52,7 @@ public class Product {
     }
 
     public void setProductDes(String productDes) {
-        this.productDes = productDes == null ? null : productDes.trim();
+        this.productDes = productDes;
     }
 
     public Float getProductPrice() {
@@ -71,16 +87,11 @@ public class Product {
         this.uid = uid;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "pid=" + pid +
-                ", productName='" + productName + '\'' +
-                ", productDes='" + productDes + '\'' +
-                ", productPrice=" + productPrice +
-                ", pcid=" + pcid +
-                ", ifSold=" + ifSold +
-                ", uid=" + uid +
-                '}';
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
