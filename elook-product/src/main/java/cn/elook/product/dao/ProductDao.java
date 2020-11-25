@@ -1,10 +1,6 @@
 package cn.elook.product.dao;
 
-import cn.elook.common.entity.Product;
-import cn.elook.common.entity.ProductCategory;
-import cn.elook.common.entity.ProductDiscuss;
-import cn.elook.common.entity.ProductPhoto;
-import org.apache.ibatis.annotations.Mapper;
+import cn.elook.common.entity.*;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -16,10 +12,12 @@ public interface ProductDao {
     //获取首页商品信息
     List<Product> getMall();
     //通过id获取商品
-
     Product getProductById(Long pid);
     //搜索商品，筛选商品
-    List<Product> getProductByCondition(@Param("productKey") String productKey, @Param("pcid") Long pcid);
+    List<Product> getProductByCondition(@Param("productKey") String productKey, @Param("pcid") Long pcid,
+                                        @Param("index") Integer index, @Param("pageSize") Integer pageSize);
+    //获取所有商品详情
+    List<ProductDetails> getProductDetails(@Param("index") Integer index, @Param("pageSize") Integer pageSize);
     //添加商品
     int addProduct(Product product);
     //下架商品

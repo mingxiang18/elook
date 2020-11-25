@@ -36,8 +36,8 @@ public class ElookProductTest {
 
     @Test
     public void test2() {
-        CommonResult productList = productService.getProductByCondition(null,1l);
-        System.out.println();
+        CommonResult productList = productService.getProductByCondition(null,null,0,10);
+        System.out.println(productList.getData());
     }
 
     @Test
@@ -102,6 +102,18 @@ public class ElookProductTest {
     @Test
     public void test10() {
         CommonResult photoList = productService.getProductPhotoByPid(1l);
+        System.out.println();
+    }
+
+    @Test
+    public void test11() {
+        CommonResult productDetails = productService.getProductDetails(0, 10);
+        System.out.println(productDetails.getData());
+    }
+
+    @Test
+    public void test12() {
+        CommonResult categoryList = productService.getProductCategoryByParentId(1l);
         System.out.println();
     }
 }

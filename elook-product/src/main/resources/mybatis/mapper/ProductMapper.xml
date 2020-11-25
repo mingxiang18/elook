@@ -24,6 +24,14 @@
                 AND pcid = #{pcid}
             </if>
         </where>
+        limit #{index},#{pageSize}
+    </select>
+
+    <select id="getProductDetails" resultType="cn.elook.common.entity.ProductDetails">
+        SELECT product.*, `user`.username
+        FROM product
+        JOIN `user` ON `user`.uid = product.uid
+        limit #{index},#{pageSize}
     </select>
 
     <insert id="addProduct" parameterType="cn.elook.common.entity.Product" useGeneratedKeys="true" keyProperty="pid">
