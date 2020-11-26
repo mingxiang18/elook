@@ -29,4 +29,6 @@ public interface IndentService {
     public CommonResult findByBuyerIdDetails(Long buyerId, Integer index, Integer pageSize, String sort);
 
     public CommonResult findByVendorIdDetails(Long vendorId,Integer index,Integer pageSize,String sort);
+
+    public CommonResult IndentCount();
 }

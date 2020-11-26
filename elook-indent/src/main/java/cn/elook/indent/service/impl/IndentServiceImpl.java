@@ -124,4 +124,14 @@ public class IndentServiceImpl implements IndentService {
             return new CommonResult(444,"无订单数据");
         }
     }
+
+    @Override
+    public CommonResult IndentCount() {
+        Integer result = indentDao.IndentCount();
+        if(result > 0){
+            return new CommonResult(200,"查询总数成功",result);
+        }else {
+            return new CommonResult(444,"查询总数失败");
+        }
+    }
 }

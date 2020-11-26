@@ -83,6 +83,12 @@ public class IndentTest {
         System.out.println(commonResult.getData());
     }
 
+    @Test
+    public void IndentCount(){
+        CommonResult commonResult = indentService.IndentCount();
+        System.out.println(commonResult.getData());
+    }
+
 
 
 }

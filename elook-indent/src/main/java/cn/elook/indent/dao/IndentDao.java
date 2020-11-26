@@ -117,4 +117,9 @@ public interface IndentDao {
     @ResultMap("indentDetailsMap")
     public List<IndentDetails> findByVendorIdDetails(Long vendorId,Integer index,Integer pageSize,String sort);
 
+
+    //统计订单数量
+    @Select("select COUNT(*) count from indent")
+    public Integer IndentCount();
+
 }

@@ -68,20 +68,25 @@ public class IndentController {
     }
 
     //添加订单
-    @PostMapping("add")
+    @PostMapping("/add")
     public CommonResult addIndent(Indent indent){
         return indentService.saveIndent(indent);
     }
 
     //根据订单号删除订单
-    @PostMapping("delete")
+    @PostMapping("/delete")
     public CommonResult deleteIndent(String oId){
         return indentService.deleteIndentById(oId);
     }
 
     //修改订单
-    @PostMapping("update")
+    @PostMapping("/update")
     public CommonResult updateIndent(Indent indent){
         return indentService.updateIndent(indent);
+    }
+
+    @GetMapping("/count")
+    public CommonResult countIndent(){
+        return indentService.IndentCount();
     }
 }
