@@ -30,5 +30,17 @@ public interface IndentService {
 
     public CommonResult findByVendorIdDetails(Long vendorId,Integer index,Integer pageSize,String sort);
 
-    public CommonResult IndentCount();
+    public CommonResult indentCount();
+
+    public CommonResult indentCountAll();
+
+    public CommonResult countBuyerIndent(Long buyerId);
+
+    public CommonResult countBuyerAllIndent(Long buyerId);
+
+    public CommonResult countVendorIndent(Long vendorId);
+
+    public CommonResult countVendorAllIndent(Long vendorId);
+
+
 }

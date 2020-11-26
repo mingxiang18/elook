@@ -8,6 +8,7 @@ import cn.elook.indent.service.IndentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 @Service("indentService")
@@ -126,8 +127,61 @@ public class IndentServiceImpl implements IndentService {
     }
 
     @Override
-    public CommonResult IndentCount() {
-        Integer result = indentDao.IndentCount();
+    public CommonResult indentCount() {
+        Integer result = indentDao.indentCount();
+        Integer page = (int)Math.ceil((double)result/10);
+        if(result > 0){
+            return new CommonResult(200,"查询总数成功",page);
+        }else {
+            return new CommonResult(444,"查询总数失败");
+        }
+    }
+
+    @Override
+    public CommonResult indentCountAll() {
+        Integer result = indentDao.indentCount();
+        if(result > 0){
+            return new CommonResult(200,"查询总数成功",result);
+        }else {
+            return new CommonResult(444,"查询总数失败");
+        }
+    }
+
+    @Override
+    public CommonResult countBuyerIndent(Long buyerId) {
+        Integer result = indentDao.countBuyerIndent(buyerId);
+        Integer page = (int)Math.ceil((double)result/10);
+        if(result > 0){
+            return new CommonResult(200,"查询总数成功",page);
+        }else {
+            return new CommonResult(444,"查询总数失败");
+        }
+    }
+
+    @Override
+    public CommonResult countBuyerAllIndent(Long buyerId) {
+        Integer result = indentDao.countBuyerIndent(buyerId);
+        if(result > 0){
+            return new CommonResult(200,"查询总数成功",result);
+        }else {
+            return new CommonResult(444,"查询总数失败");
+        }
+    }
+
+    @Override
+    public CommonResult countVendorIndent(Long vendorId) {
+        Integer result = indentDao.countBuyerIndent(vendorId);
+        Integer page = (int)Math.ceil((double)result/10);
+        if(result > 0){
+            return new CommonResult(200,"查询总数成功",page);
+        }else {
+            return new CommonResult(444,"查询总数失败");
+        }
+    }
+
+    @Override
+    public CommonResult countVendorAllIndent(Long vendorId) {
+        Integer result = indentDao.countBuyerIndent(vendorId);
         if(result > 0){
             return new CommonResult(200,"查询总数成功",result);
         }else {

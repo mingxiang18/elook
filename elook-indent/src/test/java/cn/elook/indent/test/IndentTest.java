@@ -5,6 +5,7 @@ import cn.elook.common.entity.Indent;
 import cn.elook.common.utils.CommonResult;
 import cn.elook.indent.ElookIndentApplication;
 import cn.elook.indent.service.IndentService;
+import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +32,21 @@ public class IndentTest {
     @Test
     public void saveIndent(){
         Indent indent = new Indent();
-        indent.setoId("IT20112466602bb01");
-        indent.setVendorId(1L);
-        indent.setBuyerId(2L);
+        indent.setVendorId(2L);
+        indent.setBuyerId(1L);
         indent.setAddress("广东省湛江市广东海洋大学海思B555");
-        indent.setIndentPrice(888.0f);
-        indent.setIndentCreateTime(new Date());
+        indent.setIndentPrice(666.0f);
+        Date date = new Date();
+        indent.setIndentCreateTime(date);
+        String year=String.format("%tY", date);
+        String mon=String .format("%tm", date);
+        String day=String .format("%td", date);
+        String rand1 = RandomStringUtils.randomAlphanumeric(3);
+        String rand2 = RandomStringUtils.randomAlphanumeric(3);
         indent.setIndentState(1);
         indent.setpId(2l);
+        String idString = indent.getpId()+rand1+year+mon+day+rand2+indent.getBuyerId();
+        indent.setoId(idString);
         indentService.saveIndent(indent);
         System.out.println(new Date());
     }
@@ -85,9 +93,21 @@ public class IndentTest {
 
     @Test
     public void IndentCount(){
-        CommonResult commonResult = indentService.IndentCount();
+        CommonResult commonResult = indentService.indentCount();
         System.out.println(commonResult.getData());
     }
+
+    @Test
+    public void IndentIDFormat(){
+        Date dt=new Date();
+        String year=String.format("%tY", dt);
+        String mon=String .format("%tm", dt);
+        String day=String .format("%td", dt);
+        String rand1= RandomStringUtils.randomAlphanumeric(3);
+        System.out.println(year+mon+day+rand1);
+
+    }
+
 
 
 
