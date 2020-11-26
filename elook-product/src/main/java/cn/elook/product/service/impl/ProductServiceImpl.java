@@ -46,6 +46,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public CommonResult getProductCount() {
+        Long result = productDao.getProductCount();
+        if(result > 0){
+            return new CommonResult(200,"获取商品总数成功",result);
+        }else {
+            return new CommonResult(444,"无商品");
+        }
+    }
+
+    @Override
     public CommonResult getProductDetails(Integer index, Integer pageSize) {
         List<ProductDetails> productDetails = productDao.getProductDetails(index, pageSize);
         if(productDetails != null){
@@ -80,6 +90,16 @@ public class ProductServiceImpl implements ProductService {
             return new CommonResult(200,"下架成功",result);
         }else {
             return new CommonResult(444,"下架商品失败");
+        }
+    }
+
+    @Override
+    public CommonResult getProductDetailsByCondition(String productKey, Long pcid, Integer index, Integer pageSize) {
+        List<ProductDetails> productDetails = productDao.getProductDetailsByCondition(productKey, pcid, index, pageSize);
+        if(productDetails != null){
+            return new CommonResult(200,"查询成功",productDetails);
+        }else {
+            return new CommonResult(444,"无相应商品");
         }
     }
 

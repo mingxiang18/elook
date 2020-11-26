@@ -116,4 +116,16 @@ public class ElookProductTest {
         CommonResult categoryList = productService.getProductCategoryByParentId(1l);
         System.out.println();
     }
+
+    @Test
+    public void test13() {
+        CommonResult productDetails  = productService.getProductDetailsByCondition(null,null,0,10);
+        System.out.println(productDetails.getData());
+    }
+
+    @Test
+    public void test14() {
+        CommonResult productCount  = productService.getProductCount();
+        System.out.println(productCount.getData());
+    }
 }

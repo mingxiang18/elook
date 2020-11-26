@@ -27,11 +27,30 @@
         limit #{index},#{pageSize}
     </select>
 
+    <select id="getProductDetailsByCondition" resultType="cn.elook.common.entity.ProductDetails">
+        SELECT product.*, `user`.username FROM product
+        <where>
+            <if test="productKey != null and productKey != ''">
+                AND (product_name LIKE "%"#{productKey}"%"
+                OR product_des LIKE "%"#{productKey}"%")
+            </if>
+            <if test="pcid != null and pcid != 0">
+                AND pcid = #{pcid}
+            </if>
+        </where>
+        JOIN `user` ON `user`.uid = product.uid
+        limit #{index},#{pageSize}
+    </select>
+
     <select id="getProductDetails" resultType="cn.elook.common.entity.ProductDetails">
         SELECT product.*, `user`.username
         FROM product
         JOIN `user` ON `user`.uid = product.uid
         limit #{index},#{pageSize}
+    </select>
+
+    <select id="getProductCount" resultType="Long">
+        SELECT COUNT(*) FROM product
     </select>
 
     <insert id="addProduct" parameterType="cn.elook.common.entity.Product" useGeneratedKeys="true" keyProperty="pid">

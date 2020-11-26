@@ -14,12 +14,18 @@ public interface ProductDao {
     //搜索商品，筛选商品
     List<Product> getProductByCondition(@Param("productKey") String productKey, @Param("pcid") Long pcid,
                                         @Param("index") Integer index, @Param("pageSize") Integer pageSize);
-    //获取所有商品详情
-    List<ProductDetails> getProductDetails(@Param("index") Integer index, @Param("pageSize") Integer pageSize);
+    //获取商品总数
+    Long getProductCount();
     //添加商品
     int addProduct(Product product);
     //下架商品
     int rackProduct(Long pid);
+
+    //搜索，筛选商品详情
+    List<ProductDetails> getProductDetailsByCondition(@Param("productKey") String productKey, @Param("pcid") Long pcid,
+                                               @Param("index") Integer index, @Param("pageSize") Integer pageSize);
+    //获取所有商品详情
+    List<ProductDetails> getProductDetails(@Param("index") Integer index, @Param("pageSize") Integer pageSize);
 
     //添加商品图片
     int addProductPhoto(ProductPhoto productPhoto);
