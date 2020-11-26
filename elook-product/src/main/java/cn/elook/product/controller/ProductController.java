@@ -1,12 +1,10 @@
 package cn.elook.product.controller;
 
 import cn.elook.common.entity.Product;
-import cn.elook.common.entity.ProductDetails;
 import cn.elook.common.entity.ProductDiscuss;
 import cn.elook.common.entity.ProductPhoto;
 import cn.elook.common.utils.CommonResult;
 import cn.elook.product.service.ProductService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,10 +34,22 @@ public class ProductController {
         return productService.getProductByCondition(productKey,pcid,index,pageSize);
     }
 
+    //搜索商品获取详情，productKey是关键字模糊查询，pcid是按分类查询
+    @GetMapping("/product/details/search")
+    public CommonResult getProductDetailsByCondition(String productKey, Long pcid, Integer index, Integer pageSize){
+        return productService.getProductDetailsByCondition(productKey,pcid,index,pageSize);
+    }
+
     //获取所有商品详情
     @GetMapping("/product/details")
     public CommonResult getProductDetails(Integer index, Integer pageSize){
         return productService.getProductDetails(index, pageSize);
+    }
+
+    //下架商品
+    @GetMapping("/product/count")
+    public CommonResult getProductCount(){
+        return productService.getProductCount();
     }
 
     //添加商品

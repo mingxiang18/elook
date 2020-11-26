@@ -14,12 +14,19 @@ public interface ProductService {
     CommonResult getProductById(Long pid);
     //搜索商品，筛选商品
     CommonResult getProductByCondition(String productKey, Long pcid, Integer index, Integer pageSize);
-    //获取所有商品详情
-    CommonResult getProductDetails(@Param("index") Integer index, @Param("pageSize") Integer pageSize);
+    //获取商品总数
+    CommonResult getProductCount();
     //添加商品
     CommonResult addProduct(Product product, ProductPhoto productPhoto);
     //下架商品
     CommonResult rackProduct(Long pid);
+
+    //搜索，筛选商品详情
+    CommonResult getProductDetailsByCondition(@Param("productKey") String productKey, @Param("pcid") Long pcid,
+                                               @Param("index") Integer index, @Param("pageSize") Integer pageSize);
+    //获取所有商品详情
+    CommonResult getProductDetails(@Param("index") Integer index, @Param("pageSize") Integer pageSize);
+
 
     //添加商品图片
     CommonResult addProductPhoto(ProductPhoto productPhoto);
