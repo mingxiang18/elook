@@ -6,8 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-
-@Mapper
 public interface ProductDao {
     //获取首页商品信息
     List<Product> getMall();

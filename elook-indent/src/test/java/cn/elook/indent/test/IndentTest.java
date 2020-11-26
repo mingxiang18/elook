@@ -60,16 +60,34 @@ public class IndentTest {
         indent.setoId("IT20112466602i01");
         indent.setVendorId(1l);
         indent.setBuyerId(2l);
-        indent.setAddress("广东省湛江市广东海洋大学海思BBB517");
+        indent.setAddress("广东省湛江市广东海洋大学海思ABC517");
         indent.setIndentPrice(999.0f);
         indent.setIndentCreateTime(new Date());
         indent.setIndentState(3);
         indent.setpId(3l);
-        indentService.updateIndent(indent);
-        System.out.println(indent);
+        CommonResult commonResult = indentService.updateIndent(indent);
+        System.out.println(commonResult.getCode()+commonResult.getMessage()+commonResult.getData());
+        System.out.println(commonResult.getMessage());
+        System.out.println(commonResult.getData());
     }
 
+    @Test
+    public void findAllDetails(){
+        CommonResult commonResult = indentService.findAllDetails(0,2,"Asc");
+        System.out.println(commonResult.getData());
+    }
 
+    @Test
+    public void findByIdDetailsTest(){
+        CommonResult commonResult = indentService.findByIdDetails("%IT20112466%",0,2,"Asc");
+        System.out.println(commonResult.getData());
+    }
+
+    @Test
+    public void IndentCount(){
+        CommonResult commonResult = indentService.IndentCount();
+        System.out.println(commonResult.getData());
+    }
 
 
 
