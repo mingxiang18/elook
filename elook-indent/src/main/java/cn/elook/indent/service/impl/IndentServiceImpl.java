@@ -1,6 +1,7 @@
 package cn.elook.indent.service.impl;
 
 import cn.elook.common.entity.Indent;
+import cn.elook.common.entity.IndentDetails;
 import cn.elook.common.utils.CommonResult;
 import cn.elook.indent.dao.IndentDao;
 import cn.elook.indent.service.IndentService;
@@ -81,6 +82,46 @@ public class IndentServiceImpl implements IndentService {
             return new CommonResult(200,"订单修改成功",result);
         }else {
             return new CommonResult(444,"订单修改失败");
+        }
+    }
+
+    @Override
+    public CommonResult findAllDetails(Integer index, Integer pageSize, String sort) {
+        List<IndentDetails> indentList =  indentDao.findAllDetails(index,pageSize,sort);
+        if(indentList != null){
+            return new CommonResult(200,"订单数据加载成功",indentList);
+        }else {
+            return new CommonResult(444,"无订单数据");
+        }
+    }
+
+    @Override
+    public CommonResult findByIdDetails(String oId, Integer index, Integer pageSize, String sort) {
+        List<IndentDetails> indentList =  indentDao.findByIdDetails(oId,index,pageSize,sort);
+        if(indentList != null){
+            return new CommonResult(200,"订单数据加载成功",indentList);
+        }else {
+            return new CommonResult(444,"无订单数据");
+        }
+    }
+
+    @Override
+    public CommonResult findByBuyerIdDetails(Long buyerId, Integer index, Integer pageSize, String sort) {
+        List<IndentDetails> indentList = indentDao.findByBuyerIdDetails(buyerId,index,pageSize,sort);
+        if(indentList != null){
+            return new CommonResult(200,"订单查询成功",indentList);
+        }else {
+            return new CommonResult(444,"无订单数据");
+        }
+    }
+
+    @Override
+    public CommonResult findByVendorIdDetails(Long vendorId, Integer index, Integer pageSize, String sort) {
+        List<IndentDetails> indentList = indentDao.findByVendorIdDetails(vendorId,index,pageSize,sort);
+        if(indentList != null){
+            return new CommonResult(200,"订单查询成功",indentList);
+        }else {
+            return new CommonResult(444,"无订单数据");
         }
     }
 }
