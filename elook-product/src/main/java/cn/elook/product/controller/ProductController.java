@@ -7,9 +7,6 @@ import cn.elook.common.utils.CommonResult;
 import cn.elook.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -18,7 +15,7 @@ public class ProductController {
     private ProductService productService;
 
     //获取首页商品信息
-    @GetMapping("/mall")
+    @GetMapping("/product/mall")
     public CommonResult getMall(){
         return productService.getMall();
     }
@@ -63,6 +60,18 @@ public class ProductController {
     @PostMapping("/product/rack")
     public CommonResult rackProduct(Long pid){
         return productService.rackProduct(pid);
+    }
+
+    //添加商品图片
+    @PostMapping("/product/photo/add")
+    public CommonResult addProductPhoto(ProductPhoto productPhoto){
+        return productService.addProductPhoto(productPhoto);
+    }
+
+    //获取商品图片
+    @GetMapping("/product/photo")
+    public CommonResult getProductPhotoByPid(Long pid){
+        return productService.getProductPhotoByPid(pid);
     }
 
     //添加商品讨论

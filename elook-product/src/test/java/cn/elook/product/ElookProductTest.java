@@ -48,9 +48,10 @@ public class ElookProductTest {
         product.setPcid(1l);
         product.setIfSold(0);
         product.setUid(1l);
+        product.setProductCreateTime(new Date());
 
         CommonResult result = productService.addProduct(product,null);
-        System.out.println(product.getPid());
+        System.out.println(result.getData());
     }
 
     @Test

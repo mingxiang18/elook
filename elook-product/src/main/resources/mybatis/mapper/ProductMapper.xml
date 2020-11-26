@@ -28,7 +28,8 @@
     </select>
 
     <select id="getProductDetailsByCondition" resultType="cn.elook.common.entity.ProductDetails">
-        SELECT product.*, `user`.username FROM product
+        SELECT product.*, `user`.username, product_category.category_name
+        FROM product
         <where>
             <if test="productKey != null and productKey != ''">
                 AND (product_name LIKE "%"#{productKey}"%"
@@ -39,13 +40,15 @@
             </if>
         </where>
         JOIN `user` ON `user`.uid = product.uid
+        JOIN product_category ON product_category.pcid = product.pcid
         limit #{index},#{pageSize}
     </select>
 
     <select id="getProductDetails" resultType="cn.elook.common.entity.ProductDetails">
-        SELECT product.*, `user`.username
+        SELECT product.*, `user`.username, product_category.category_name
         FROM product
         JOIN `user` ON `user`.uid = product.uid
+        JOIN product_category ON product_category.pcidid = product.pcid
         limit #{index},#{pageSize}
     </select>
 
@@ -54,8 +57,8 @@
     </select>
 
     <insert id="addProduct" parameterType="cn.elook.common.entity.Product" useGeneratedKeys="true" keyProperty="pid">
-        INSERT INTO product(product_name,product_des,product_price,pcid,if_sold,uid)
-        VALUES (#{productName},#{productDes},#{productPrice},#{pcid},#{ifSold},#{uid});
+        INSERT INTO product(product_name,product_des,product_price,pcid,if_sold,uid,product_create_time)
+        VALUES (#{productName},#{productDes},#{productPrice},#{pcid},#{ifSold},#{uid},#{productCreateTime});
     </insert>
 
     <update id="rackProduct" useGeneratedKeys="true" keyProperty="id">
