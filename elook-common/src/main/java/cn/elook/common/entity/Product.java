@@ -1,5 +1,7 @@
 package cn.elook.common.entity;
 
+import java.util.Date;
+
 public class Product {
     private Long pid;
 
@@ -14,6 +16,30 @@ public class Product {
     private Integer ifSold;
 
     private Long uid;
+
+    private Date productCreateTime;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "pid=" + pid +
+                ", productName='" + productName + '\'' +
+                ", productDes='" + productDes + '\'' +
+                ", productPrice=" + productPrice +
+                ", pcid=" + pcid +
+                ", ifSold=" + ifSold +
+                ", uid=" + uid +
+                ", productCreateTime=" + productCreateTime +
+                '}';
+    }
+
+    public Date getProductCreateTime() {
+        return productCreateTime;
+    }
+
+    public void setProductCreateTime(Date productCreateTime) {
+        this.productCreateTime = productCreateTime;
+    }
 
     public Long getPid() {
         return pid;
@@ -71,16 +97,4 @@ public class Product {
         this.uid = uid;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "pid=" + pid +
-                ", productName='" + productName + '\'' +
-                ", productDes='" + productDes + '\'' +
-                ", productPrice=" + productPrice +
-                ", pcid=" + pcid +
-                ", ifSold=" + ifSold +
-                ", uid=" + uid +
-                '}';
-    }
 }
