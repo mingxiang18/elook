@@ -20,6 +20,8 @@ public interface ProductDao {
     int addProduct(Product product);
     //下架商品
     int rackProduct(Long pid);
+    //下架商品
+    int updateProduct(Product product);
 
     //搜索，筛选商品详情
     List<ProductDetails> getProductDetailsByCondition(@Param("productKey") String productKey, @Param("pcid") Long pcid,
@@ -29,8 +31,10 @@ public interface ProductDao {
 
     //添加商品图片
     int addProductPhoto(ProductPhoto productPhoto);
-    //获取商品图片
+    //获取商品所有图片
     List<ProductPhoto> getProductPhotoByPid(Long pid);
+    //获取商品一张图片
+    ProductPhoto getOneProductPhotoByPid(Long pid);
 
     //添加商品讨论
     int addProductDiscuss(ProductDiscuss productDiscuss);

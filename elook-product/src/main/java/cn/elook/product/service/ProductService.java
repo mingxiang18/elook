@@ -20,6 +20,8 @@ public interface ProductService {
     CommonResult addProduct(Product product, ProductPhoto productPhoto);
     //下架商品
     CommonResult rackProduct(Long pid);
+    //修改商品
+    CommonResult updateProduct(Product product);
 
     //搜索，筛选商品详情
     CommonResult getProductDetailsByCondition(@Param("productKey") String productKey, @Param("pcid") Long pcid,
@@ -32,6 +34,8 @@ public interface ProductService {
     CommonResult addProductPhoto(ProductPhoto productPhoto);
     //获取商品图片
     CommonResult getProductPhotoByPid(Long pid);
+    //获取商品一张图片
+    CommonResult getOneProductPhotoByPid(Long pid);
 
     //添加商品讨论
     CommonResult addProductDiscuss(ProductDiscuss productDiscuss);

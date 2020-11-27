@@ -129,4 +129,20 @@ public class ElookProductTest {
         CommonResult productCount  = productService.getProductCount();
         System.out.println(productCount.getData());
     }
+
+    @Test
+    public void test15() {
+        Product product = new Product();
+        product.setPid(11l);
+        product.setProductName("鞋子3");
+        product.setProductPrice(1000f);
+        CommonResult result  = productService.updateProduct(product);
+        System.out.println(result.getData());
+    }
+
+    @Test
+    public void test16() {
+        CommonResult productList = productService.getProductDetailsByCondition("衣",null,0,10);
+        System.out.println(productList.getData());
+    }
 }
