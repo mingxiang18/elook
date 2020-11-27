@@ -44,7 +44,7 @@ public class ProductController {
         return productService.getProductDetails(index, pageSize);
     }
 
-    //下架商品
+    //获取商品分页总数
     @GetMapping("/product/count")
     public CommonResult getProductCount(){
         return productService.getProductCount();
@@ -52,19 +52,25 @@ public class ProductController {
 
     //添加商品
     @PostMapping("/product/add")
-    public CommonResult addProduct(Product product, ProductPhoto productPhoto){
+    public CommonResult addProduct(@RequestBody Product product, ProductPhoto productPhoto){
         return productService.addProduct(product, productPhoto);
     }
 
     //下架商品
     @PostMapping("/product/rack")
-    public CommonResult rackProduct(Long pid){
-        return productService.rackProduct(pid);
+    public CommonResult rackProduct(@RequestBody Product product){
+        return productService.rackProduct(product.getPid());
+    }
+
+    //修改商品
+    @PostMapping("/product/update")
+    public CommonResult updateProduct(@RequestBody Product product){
+        return productService.updateProduct(product);
     }
 
     //添加商品图片
     @PostMapping("/product/photo/add")
-    public CommonResult addProductPhoto(ProductPhoto productPhoto){
+    public CommonResult addProductPhoto(@RequestBody ProductPhoto productPhoto){
         return productService.addProductPhoto(productPhoto);
     }
 
@@ -74,16 +80,22 @@ public class ProductController {
         return productService.getProductPhotoByPid(pid);
     }
 
+    //获取商品一张图片
+    @GetMapping("/product/mainPhoto")
+    public CommonResult getOneProductPhotoByPid(Long pid){
+        return  productService.getOneProductPhotoByPid(pid);
+    }
+
     //添加商品讨论
     @PostMapping("/product/discuss/add")
-    public CommonResult addProductDiscuss(ProductDiscuss productDiscuss){
+    public CommonResult addProductDiscuss(@RequestBody ProductDiscuss productDiscuss){
         return productService.addProductDiscuss(productDiscuss);
     }
 
     //删除商品讨论
     @PostMapping("/product/discuss/delete")
-    public CommonResult deleteProductDiscuss(Long pdid){
-        return productService.deleteProductDiscuss(pdid);
+    public CommonResult deleteProductDiscuss(@RequestBody ProductDiscuss productDiscuss){
+        return productService.deleteProductDiscuss(productDiscuss.getPdid());
     }
 
     //获取商品下所有商品讨论

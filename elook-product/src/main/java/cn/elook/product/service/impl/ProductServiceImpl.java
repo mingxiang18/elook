@@ -68,6 +68,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public CommonResult addProduct(Product product, ProductPhoto productPhoto) {
         product.setIfSold(0);
+        product.setProductCreateTime(new Date());
         int result = productDao.addProduct(product);
         if(result <= 0){
             return new CommonResult(444,"添加商品失败",result);
@@ -90,6 +91,16 @@ public class ProductServiceImpl implements ProductService {
             return new CommonResult(200,"下架成功",result);
         }else {
             return new CommonResult(444,"下架商品失败");
+        }
+    }
+
+    @Override
+    public CommonResult updateProduct(Product product) {
+        int result = productDao.updateProduct(product);
+        if(result > 0){
+            return new CommonResult(200,"修改成功",result);
+        }else {
+            return new CommonResult(444,"修改商品失败");
         }
     }
 
@@ -118,6 +129,16 @@ public class ProductServiceImpl implements ProductService {
         List<ProductPhoto> productPhotoList = productDao.getProductPhotoByPid(pid);
         if(productPhotoList != null){
             return new CommonResult(200,"获取商品图片成功",productPhotoList);
+        }else {
+            return new CommonResult(444,"无对应商品图片");
+        }
+    }
+
+    @Override
+    public CommonResult getOneProductPhotoByPid(Long pid) {
+        ProductPhoto productPhotot = productDao.getOneProductPhotoByPid(pid);
+        if(productPhotot != null){
+            return new CommonResult(200,"获取商品图片成功",productPhotot);
         }else {
             return new CommonResult(444,"无对应商品图片");
         }
