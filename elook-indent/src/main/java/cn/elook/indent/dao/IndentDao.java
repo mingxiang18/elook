@@ -120,6 +120,12 @@ public interface IndentDao {
 
     //统计订单数量
     @Select("select COUNT(*) count from indent")
-    public Integer IndentCount();
+    public Integer indentCount();
+
+    @Select("select COUNT(*) count from indent where buyer_id=#{buyerId}")
+    public Integer countBuyerIndent(Long buyerId);
+
+    @Select("select COUNT(*) count from indent where vendor_id=#{vendorId}")
+    public Integer countVendorIndent(Long buyerId);
 
 }
