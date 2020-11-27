@@ -78,12 +78,13 @@ public interface IndentDao {
             @Result(column = "buyer_name",property = "buyerName"),
             @Result(column = "vendor_name",property = "vendorName"),
             @Result(column = "product_name",property = "productName"),
+            @Result(column = "product_des",property = "productDes")
     })
     public List<IndentDetails> findAllDetails(Integer index,Integer pageSize,String sort);
 
 
     //根据订单ID查询所有订单,分页/按降序或升序查询,详细信息
-    @Select("select indent.*,u1.username buyer_name,u2.username vendor_name,product.product_name " +
+    @Select("select indent.*,u1.username buyer_name,u2.username vendor_name,product.product_name,product.product_des " +
             "from indent " +
             "join user u1 on u1.uid = indent.buyer_id " +
             "join user u2 on u2.uid = indent.vendor_id " +
@@ -95,7 +96,7 @@ public interface IndentDao {
 
 
     //根据买家ID查询所有订单,分页/按降序或升序查询,详细信息
-    @Select("select indent.*,u1.username buyer_name,u2.username vendor_name,product.product_name " +
+    @Select("select indent.*,u1.username buyer_name,u2.username vendor_name,product.product_name,product.product_des " +
             "from indent " +
             "join user u1 on u1.uid = indent.buyer_id " +
             "join user u2 on u2.uid = indent.vendor_id " +
@@ -107,7 +108,7 @@ public interface IndentDao {
 
 
     //根据卖家ID查询所有订单,分页/按降序或升序查询,详细信息
-    @Select("select indent.*,u1.username buyer_name,u2.username vendor_name,product.product_name " +
+    @Select("select indent.*,u1.username buyer_name,u2.username vendor_name,product.product_name,product.product_des " +
             "from indent " +
             "join user u1 on u1.uid = indent.buyer_id " +
             "join user u2 on u2.uid = indent.vendor_id " +

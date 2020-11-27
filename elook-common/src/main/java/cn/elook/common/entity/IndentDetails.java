@@ -15,6 +15,7 @@ public class IndentDetails implements Serializable {
     private String buyerName;
     private String vendorName;
     private String productName;
+    private String productDes;
 
     public String getoId() {
         return oId;
@@ -104,6 +105,14 @@ public class IndentDetails implements Serializable {
         this.productName = productName;
     }
 
+    public String getProductDes() {
+        return productDes;
+    }
+
+    public void setProductDes(String productDes) {
+        this.productDes = productDes;
+    }
+
     @Override
     public String toString() {
         return "IndentDetails{" +
@@ -118,6 +127,7 @@ public class IndentDetails implements Serializable {
                 ", buyerName='" + buyerName + '\'' +
                 ", vendorName='" + vendorName + '\'' +
                 ", productName='" + productName + '\'' +
+                ", productDes='" + productDes + '\'' +
                 '}';
     }
 }
