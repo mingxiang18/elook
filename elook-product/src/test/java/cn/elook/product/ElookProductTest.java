@@ -126,7 +126,7 @@ public class ElookProductTest {
 
     @Test
     public void test14() {
-        CommonResult productCount  = productService.getProductCount();
+        CommonResult productCount  = productService.getProductCount(null,0l);
         System.out.println(productCount.getData());
     }
 

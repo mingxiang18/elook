@@ -15,7 +15,7 @@ public interface ProductService {
     //搜索商品，筛选商品
     CommonResult getProductByCondition(String productKey, Long pcid, Integer index, Integer pageSize);
     //获取商品总数
-    CommonResult getProductCount();
+    CommonResult getProductCount(String productKey, Long pcid);
     //添加商品
     CommonResult addProduct(Product product, ProductPhoto productPhoto);
     //下架商品

@@ -15,7 +15,7 @@ public interface ProductDao {
     List<Product> getProductByCondition(@Param("productKey") String productKey, @Param("pcid") Long pcid,
                                         @Param("index") Integer index, @Param("pageSize") Integer pageSize);
     //获取商品总数
-    Long getProductCount();
+    Long getProductCount(@Param("productKey") String productKey,@Param("pcid") Long pcid);
     //添加商品
     int addProduct(Product product);
     //下架商品

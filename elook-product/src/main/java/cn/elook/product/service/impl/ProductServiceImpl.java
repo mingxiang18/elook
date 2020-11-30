@@ -7,6 +7,7 @@ import cn.elook.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +19,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public CommonResult getMall() {
         List<Product> productList = productDao.getMall();
+        List<ProductMall> productMall = new ArrayList<>();
+        for (int i = 0; i < productList.size();i++){
+            ProductMall product = new ProductMall();
+            product.setProduct(productList.get(i));
+            product.setProductPhoto(productDao.getOneProductPhotoByPid(productList.get(i).getPid()));
+            productMall.add(product);
+        }
         if(productList != null){
-            return new CommonResult(200,"商城数据加载成功",productList);
+            return new CommonResult(200,"商城数据加载成功",productMall);
         }else {
             return new CommonResult(444,"无商城数据");
         }
@@ -46,8 +54,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public CommonResult getProductCount() {
-        Long result = productDao.getProductCount();
+    public CommonResult getProductCount(String productKey, Long pcid) {
+        Long result = productDao.getProductCount(productKey,pcid);
         if(result > 0){
             return new CommonResult(200,"获取商品总数成功",result);
         }else {

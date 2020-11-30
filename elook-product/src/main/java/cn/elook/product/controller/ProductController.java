@@ -44,10 +44,10 @@ public class ProductController {
         return productService.getProductDetails(index, pageSize);
     }
 
-    //获取商品分页总数
+    //获取商品总数
     @GetMapping("/product/count")
-    public CommonResult getProductCount(){
-        return productService.getProductCount();
+    public CommonResult getProductCount(String productKey, Long pcid){
+        return productService.getProductCount(productKey, pcid);
     }
 
     //添加商品
