@@ -16,6 +16,9 @@
     <select id="getProductByCondition" resultType="cn.elook.common.entity.Product">
         SELECT * FROM product
         <where>
+            <if test="ifSold != null and ifSold != -1">
+                AND if_sold = #{ifSold}
+            </if>
             <if test="productKey != null and productKey != ''">
                 AND (product_name LIKE "%"#{productKey}"%"
                 OR product_des LIKE "%"#{productKey}"%")

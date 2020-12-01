@@ -17,8 +17,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public CommonResult getMall() {
-        List<Product> productList = productDao.getMall();
+    public CommonResult getMall(String productKey, Long pcid, Integer index, Integer pageSize, Integer ifSold) {
+        List<Product> productList = productDao.getProductByCondition(productKey, pcid, index, pageSize,ifSold);
         List<ProductMall> productMall = new ArrayList<>();
         for (int i = 0; i < productList.size();i++){
             ProductMall product = new ProductMall();
@@ -44,8 +44,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public CommonResult getProductByCondition(String productKey, Long pcid, Integer index, Integer pageSize) {
-        List<Product> productList = productDao.getProductByCondition(productKey, pcid, index, pageSize);
+    public CommonResult getProductByCondition(String productKey, Long pcid, Integer index, Integer pageSize,Integer ifSold) {
+        List<Product> productList = productDao.getProductByCondition(productKey, pcid, index, pageSize,ifSold);
         if(productList != null){
             return new CommonResult(200,"查询成功",productList);
         }else {
