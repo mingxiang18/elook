@@ -3,7 +3,7 @@ package cn.elook.common.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Indent implements Serializable {
+public class IndentDetails implements Serializable {
     private String oId;
     private Long vendorId;
     private Long buyerId;
@@ -12,6 +12,10 @@ public class Indent implements Serializable {
     private Date indentCreateTime;
     private Integer indentState;
     private Long pId;
+    private String buyerName;
+    private String vendorName;
+    private String productName;
+    private String productDes;
 
     public String getoId() {
         return oId;
@@ -77,9 +81,41 @@ public class Indent implements Serializable {
         this.pId = pId;
     }
 
+    public String getBuyerName() {
+        return buyerName;
+    }
+
+    public void setBuyerName(String buyerName) {
+        this.buyerName = buyerName;
+    }
+
+    public String getVendorName() {
+        return vendorName;
+    }
+
+    public void setVendorName(String vendorName) {
+        this.vendorName = vendorName;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductDes() {
+        return productDes;
+    }
+
+    public void setProductDes(String productDes) {
+        this.productDes = productDes;
+    }
+
     @Override
     public String toString() {
-        return "Indent{" +
+        return "IndentDetails{" +
                 "oId='" + oId + '\'' +
                 ", vendorId=" + vendorId +
                 ", buyerId=" + buyerId +
@@ -88,6 +124,10 @@ public class Indent implements Serializable {
                 ", indentCreateTime=" + indentCreateTime +
                 ", indentState=" + indentState +
                 ", pId=" + pId +
+                ", buyerName='" + buyerName + '\'' +
+                ", vendorName='" + vendorName + '\'' +
+                ", productName='" + productName + '\'' +
+                ", productDes='" + productDes + '\'' +
                 '}';
     }
 }

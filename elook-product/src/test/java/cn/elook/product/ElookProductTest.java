@@ -4,6 +4,7 @@ import cn.elook.common.entity.Product;
 import cn.elook.common.entity.ProductCategory;
 import cn.elook.common.entity.ProductDiscuss;
 import cn.elook.common.entity.ProductPhoto;
+import cn.elook.common.utils.CommonResult;
 import cn.elook.product.service.ProductService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,20 +24,20 @@ public class ElookProductTest {
 
     @Test
     public void test0() {
-        List<Product> productList = productService.getMall();
-        System.out.println(productList.size()+"  "+productList.get(0).getProductName());
+        //CommonResult productList = productService.getMall();
+        System.out.println();
     }
 
     @Test
     public void test1() {
-        Product product = productService.getProductById(1l);
-        System.out.println(product.getProductName());
+        CommonResult product = productService.getProductById(1l);
+        System.out.println();
     }
 
     @Test
     public void test2() {
-        List<Product> productList = productService.getProductByCondition(null,1l);
-        System.out.println(productList.size()+"  "+productList.get(0).getProductName());
+        CommonResult productList = productService.getProductByCondition(null,null,0,10,-1);
+        System.out.println(productList.getData());
     }
 
     @Test
@@ -47,15 +48,16 @@ public class ElookProductTest {
         product.setPcid(1l);
         product.setIfSold(0);
         product.setUid(1l);
+        product.setProductCreateTime(new Date());
 
-        int result = productService.addProduct(product);
-        System.out.println(result);
+        CommonResult result = productService.addProduct(product,null);
+        System.out.println(result.getData());
     }
 
     @Test
     public void test4() {
 
-        int result = productService.rackProduct(3l);
+        CommonResult result = productService.rackProduct(3l);
         System.out.println(result);
     }
 
@@ -67,26 +69,26 @@ public class ElookProductTest {
         productDiscuss.setPdCreateTime(new Date());
         productDiscuss.setUid(1l);
 
-        int result = productService.addProductDiscuss(productDiscuss);
+        CommonResult result = productService.addProductDiscuss(productDiscuss);
         System.out.println(result);
     }
 
     @Test
     public void test6() {
-        int result = productService.deleteProductDiscuss(1l);
+        CommonResult result = productService.deleteProductDiscuss(1l);
         System.out.println(result);
     }
 
     @Test
     public void test7() {
-        List<ProductDiscuss> discuss = productService.getProductDiscussByPid(1l);
-        System.out.println(discuss.size()+"   "+discuss.get(0).getPdDiscuss());
+        CommonResult discuss = productService.getProductDiscussByPid(1l);
+        System.out.println(discuss.getData());
     }
 
     @Test
     public void test8() {
-        List<ProductCategory> categoryList = productService.getProductCategoryById(1l);
-        System.out.println(categoryList.size()+"   "+categoryList.get(0).getCategoryName());
+        CommonResult categoryList = productService.getProductCategoryById(1l);
+        System.out.println();
     }
 
     @Test
@@ -94,13 +96,53 @@ public class ElookProductTest {
         ProductPhoto productPhoto = new ProductPhoto();
         productPhoto.setPid(1l);
         productPhoto.setProductSrc("http://8.129.53.24:8888/group1/M00/00/00/rBMbxV-7LZuAPk8DAAqNY_2fplY382.jpg");
-        int result = productService.addProductPhoto(productPhoto);
+        CommonResult result = productService.addProductPhoto(productPhoto);
         System.out.println(result);
     }
 
     @Test
     public void test10() {
-        List<ProductPhoto> photoList = productService.getProductPhotoByPid(1l);
-        System.out.println(photoList.size()+"   "+photoList.get(0).getProductSrc());
+        CommonResult photoList = productService.getProductPhotoByPid(1l);
+        System.out.println();
+    }
+
+    @Test
+    public void test11() {
+        CommonResult productDetails = productService.getProductDetails(0, 10);
+        System.out.println(productDetails.getData());
+    }
+
+    @Test
+    public void test12() {
+        CommonResult categoryList = productService.getProductCategoryByParentId(1l);
+        System.out.println();
+    }
+
+    @Test
+    public void test13() {
+        CommonResult productDetails  = productService.getProductDetailsByCondition(null,null,0,10);
+        System.out.println(productDetails.getData());
+    }
+
+    @Test
+    public void test14() {
+        CommonResult productCount  = productService.getProductCount(null,0l);
+        System.out.println(productCount.getData());
+    }
+
+    @Test
+    public void test15() {
+        Product product = new Product();
+        product.setPid(11l);
+        product.setProductName("鞋子3");
+        product.setProductPrice(1000f);
+        CommonResult result  = productService.updateProduct(product);
+        System.out.println(result.getData());
+    }
+
+    @Test
+    public void test16() {
+        CommonResult productList = productService.getProductDetailsByCondition("衣",null,0,10);
+        System.out.println(productList.getData());
     }
 }

@@ -2,7 +2,7 @@ package cn.elook.common.entity;
 
 import java.util.Date;
 
-public class Product {
+public class ProductDetails {
     private Long pid;
 
     private String productName;
@@ -17,11 +17,17 @@ public class Product {
 
     private Long uid;
 
+    private String username;
+
+    private String categoryName;
+
     private Date productCreateTime;
+
+    private String productPhoto;
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "ProductDetails{" +
                 "pid=" + pid +
                 ", productName='" + productName + '\'' +
                 ", productDes='" + productDes + '\'' +
@@ -29,6 +35,8 @@ public class Product {
                 ", pcid=" + pcid +
                 ", ifSold=" + ifSold +
                 ", uid=" + uid +
+                ", username='" + username + '\'' +
+                ", categoryName='" + categoryName + '\'' +
                 ", productCreateTime=" + productCreateTime +
                 '}';
     }
@@ -39,6 +47,14 @@ public class Product {
 
     public void setProductCreateTime(Date productCreateTime) {
         this.productCreateTime = productCreateTime;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public Long getPid() {
@@ -54,7 +70,7 @@ public class Product {
     }
 
     public void setProductName(String productName) {
-        this.productName = productName == null ? null : productName.trim();
+        this.productName = productName;
     }
 
     public String getProductDes() {
@@ -62,7 +78,7 @@ public class Product {
     }
 
     public void setProductDes(String productDes) {
-        this.productDes = productDes == null ? null : productDes.trim();
+        this.productDes = productDes;
     }
 
     public Float getProductPrice() {
@@ -97,4 +113,19 @@ public class Product {
         this.uid = uid;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getProductPhoto() {
+        return productPhoto;
+    }
+
+    public void setProductPhoto(String productPhoto) {
+        this.productPhoto = productPhoto;
+    }
 }

@@ -6,7 +6,7 @@
 <mapper namespace="cn.elook.product.dao.ProductDao">
 
     <select id="getMall" resultType="cn.elook.common.entity.Product">
-        SELECT * FROM product limit 10
+        SELECT * FROM product limit 12
     </select>
 
     <select id="getProductById" resultType="cn.elook.common.entity.Product">
@@ -15,6 +15,48 @@
 
     <select id="getProductByCondition" resultType="cn.elook.common.entity.Product">
         SELECT * FROM product
+        <where>
+            <if test="ifSold != null and ifSold != -1">
+                AND if_sold = #{ifSold}
+            </if>
+            <if test="productKey != null and productKey != ''">
+                AND (product_name LIKE "%"#{productKey}"%"
+                OR product_des LIKE "%"#{productKey}"%")
+            </if>
+            <if test="pcid != null and pcid != 0">
+                AND pcid = #{pcid}
+            </if>
+        </where>
+        limit #{index},#{pageSize}
+    </select>
+
+    <select id="getProductDetailsByCondition" resultType="cn.elook.common.entity.ProductDetails">
+        SELECT product.*, `user`.username, product_category.category_name
+        FROM product
+        JOIN `user` ON `user`.uid = product.uid
+        JOIN product_category ON product_category.pcid = product.pcid
+        <where>
+            <if test="productKey != null and productKey != ''">
+                AND (product_name LIKE "%"#{productKey}"%"
+                OR product_des LIKE "%"#{productKey}"%")
+            </if>
+            <if test="pcid != null and pcid != 0">
+                AND product.pcid = #{pcid}
+            </if>
+        </where>
+        limit #{index},#{pageSize}
+    </select>
+
+    <select id="getProductDetails" resultType="cn.elook.common.entity.ProductDetails">
+        SELECT product.*, `user`.username, product_category.category_name
+        FROM product
+        JOIN `user` ON `user`.uid = product.uid
+        JOIN product_category ON product_category.pcidid = product.pcid
+        limit #{index},#{pageSize}
+    </select>
+
+    <select id="getProductCount" resultType="Long">
+        SELECT COUNT(*) FROM product
         <where>
             <if test="productKey != null and productKey != ''">
                 AND (product_name LIKE "%"#{productKey}"%"
@@ -26,13 +68,23 @@
         </where>
     </select>
 
-    <insert id="addProduct" parameterType="cn.elook.common.entity.Product" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO product(product_name,product_des,product_price,pcid,if_sold,uid)
-        VALUES (#{productName},#{productDes},#{productPrice},#{pcid},#{ifSold},#{uid});
+    <insert id="addProduct" parameterType="cn.elook.common.entity.Product" useGeneratedKeys="true" keyProperty="pid">
+        INSERT INTO product(product_name,product_des,product_price,pcid,if_sold,uid,product_create_time)
+        VALUES (#{productName},#{productDes},#{productPrice},#{pcid},#{ifSold},#{uid},#{productCreateTime});
     </insert>
 
     <update id="rackProduct" useGeneratedKeys="true" keyProperty="id">
         UPDATE product SET if_sold = 2 WHERE pid = #{pid}
+    </update>
+
+    <update id="updateProduct" useGeneratedKeys="true" keyProperty="id">
+        UPDATE product
+        <trim prefix="set" suffixOverrides=",">
+            <if test="productName != null and productName != ''">product_name=#{productName},</if>
+            <if test="productPrice != null and productPrice != ''">product_price=#{productPrice},</if>
+            <if test="ifSold != null and ifSold != -1">if_sold=#{ifSold},</if>
+        </trim>
+        WHERE pid = #{pid}
     </update>
 
     <insert id="addProductPhoto" parameterType="cn.elook.common.entity.ProductPhoto" useGeneratedKeys="true" keyProperty="id">
@@ -42,6 +94,10 @@
 
     <select id="getProductPhotoByPid" resultType="cn.elook.common.entity.ProductPhoto">
         SELECT * FROM product_photo WHERE pid = #{pid}
+    </select>
+
+    <select id="getOneProductPhotoByPid" resultType="cn.elook.common.entity.ProductPhoto">
+        SELECT * FROM product_photo WHERE pid = #{pid} limit 1
     </select>
 
     <insert id="addProductDiscuss" parameterType="cn.elook.common.entity.ProductDiscuss" useGeneratedKeys="true" keyProperty="id">
@@ -59,5 +115,9 @@
 
     <select id="getProductCategoryById" resultType="cn.elook.common.entity.ProductCategory">
         SELECT * FROM product_category WHERE pcid = #{pcid}
+    </select>
+
+    <select id="getProductCategoryByParentId" resultType="cn.elook.common.entity.ProductCategory">
+        SELECT * FROM product_category WHERE parent_id = #{parentId}
     </select>
 </mapper>
