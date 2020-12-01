@@ -127,9 +127,9 @@ public class IndentServiceImpl implements IndentService {
     }
 
     @Override
-    public CommonResult indentCount() {
-        Integer result = indentDao.indentCount();
-        Integer page = (int)Math.ceil((double)result/10);
+    public CommonResult indentCount(IndentDetails indentDetails,Integer pageSize, String sort) {
+        Integer result = indentDao.indentCount(indentDetails,sort);
+        Integer page = (int)Math.ceil((double)result/pageSize);
         if(result > 0){
             return new CommonResult(200,"查询总数成功",page);
         }else {
@@ -138,8 +138,8 @@ public class IndentServiceImpl implements IndentService {
     }
 
     @Override
-    public CommonResult indentCountAll() {
-        Integer result = indentDao.indentCount();
+    public CommonResult indentCountAll(IndentDetails indentDetails,String sort) {
+        Integer result = indentDao.indentCount(indentDetails,sort);
         if(result > 0){
             return new CommonResult(200,"查询总数成功",result);
         }else {
@@ -148,13 +148,13 @@ public class IndentServiceImpl implements IndentService {
     }
 
     @Override
-    public CommonResult countBuyerIndent(Long buyerId) {
+    public CommonResult countBuyerIndent(Long buyerId,Integer pageSize) {
         Integer result = indentDao.countBuyerIndent(buyerId);
-        Integer page = (int)Math.ceil((double)result/10);
+        Integer page = (int)Math.ceil((double)result/pageSize);
         if(result > 0){
-            return new CommonResult(200,"查询总数成功",page);
+            return new CommonResult(200,"查询总页数成功",page);
         }else {
-            return new CommonResult(444,"查询总数失败");
+            return new CommonResult(444,"查询总页数失败");
         }
     }
 
@@ -169,23 +169,33 @@ public class IndentServiceImpl implements IndentService {
     }
 
     @Override
-    public CommonResult countVendorIndent(Long vendorId) {
-        Integer result = indentDao.countBuyerIndent(vendorId);
-        Integer page = (int)Math.ceil((double)result/10);
+    public CommonResult countVendorIndent(Long vendorId,Integer pageSize) {
+        Integer result = indentDao.countVendorIndent(vendorId);
+        Integer page = (int)Math.ceil((double)result/pageSize);
         if(result > 0){
-            return new CommonResult(200,"查询总数成功",page);
+            return new CommonResult(200,"查询总页数成功",page);
+        }else {
+            return new CommonResult(444,"查询总页数失败");
+        }
+    }
+
+    @Override
+    public CommonResult countVendorAllIndent(Long vendorId) {
+        Integer result = indentDao.countVendorIndent(vendorId);
+        if(result > 0){
+            return new CommonResult(200,"查询总数成功",result);
         }else {
             return new CommonResult(444,"查询总数失败");
         }
     }
 
     @Override
-    public CommonResult countVendorAllIndent(Long vendorId) {
-        Integer result = indentDao.countBuyerIndent(vendorId);
-        if(result > 0){
-            return new CommonResult(200,"查询总数成功",result);
+    public CommonResult getIndentDetailByAny(IndentDetails indentDetails, Integer index, Integer pageSize, String sort) {
+        List<IndentDetails> indentList = indentDao.getIndentDetailByAny(indentDetails,index,pageSize,sort);
+        if(indentList != null){
+            return new CommonResult(200,"订单查询成功",indentList);
         }else {
-            return new CommonResult(444,"查询总数失败");
+            return new CommonResult(444,"无订单数据");
         }
     }
 }

@@ -30,17 +30,21 @@ public interface IndentService {
 
     public CommonResult findByVendorIdDetails(Long vendorId,Integer index,Integer pageSize,String sort);
 
-    public CommonResult indentCount();
+    //模糊查询统计订单页数
+    public CommonResult indentCount(IndentDetails indentDetails,Integer pageSize, String sort);
+    //模糊查询统计订单总数
+    public CommonResult indentCountAll(IndentDetails indentDetails,String sort);
 
-    public CommonResult indentCountAll();
-
-    public CommonResult countBuyerIndent(Long buyerId);
+    public CommonResult countBuyerIndent(Long buyerId,Integer pageSize);
 
     public CommonResult countBuyerAllIndent(Long buyerId);
 
-    public CommonResult countVendorIndent(Long vendorId);
+    public CommonResult countVendorIndent(Long vendorId,Integer pageSize);
 
     public CommonResult countVendorAllIndent(Long vendorId);
 
+
+    //万能模糊查询
+    public CommonResult getIndentDetailByAny(IndentDetails indentDetails,Integer index,Integer pageSize,String sort);
 
 }

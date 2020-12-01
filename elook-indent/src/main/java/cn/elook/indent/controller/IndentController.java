@@ -2,6 +2,7 @@ package cn.elook.indent.controller;
 
 
 import cn.elook.common.entity.Indent;
+import cn.elook.common.entity.IndentDetails;
 import cn.elook.common.utils.CommonResult;
 import cn.elook.indent.service.IndentService;
 import org.apache.commons.lang.RandomStringUtils;
@@ -69,6 +70,16 @@ public class IndentController {
         return indentService.findByVendorIdDetails(vendorId,index,pageSize,sort);
     }
 
+    //模糊查询订单
+    @GetMapping("/getIndentDetailByAny")
+    public CommonResult getIndentDetailByAny(IndentDetails indentDetails,String findKey,Integer index,Integer pageSize,String sort){
+        indentDetails.setoId(findKey);
+        indentDetails.setBuyerName(findKey);
+        indentDetails.setVendorName(findKey);
+        indentDetails.setProductName(findKey);
+        return  indentService.getIndentDetailByAny(indentDetails,index,pageSize,sort);
+    }
+
     //添加订单
     @PostMapping("/add")
     public CommonResult addIndent(Indent indent){
@@ -81,6 +92,7 @@ public class IndentController {
         String rand2 = RandomStringUtils.randomAlphanumeric(3);
         String idString = indent.getpId()+rand1+year+mon+day+rand2+indent.getBuyerId();
         indent.setoId(idString);
+        indent.setIndentState(0);
         return indentService.saveIndent(indent);
     }
 
@@ -92,28 +104,37 @@ public class IndentController {
 
     //修改订单
     @PostMapping("/update")
-    public CommonResult updateIndent(Indent indent){
+    public CommonResult updateIndent(@RequestBody Indent indent){
+        System.out.println(indent);
         return indentService.updateIndent(indent);
     }
 
 
     //分页计算页数
     @GetMapping("/count")
-    public CommonResult countIndent(){
-        return indentService.indentCount();
+    public CommonResult countIndent(IndentDetails indentDetails,String findKey,Integer index,Integer pageSize,String sort){
+        indentDetails.setoId(findKey);
+        indentDetails.setBuyerName(findKey);
+        indentDetails.setVendorName(findKey);
+        indentDetails.setProductName(findKey);
+        return indentService.indentCount(indentDetails,pageSize,sort);
     }
 
 
     //计算订单总数
     @GetMapping("countAll")
-    public CommonResult countAllIndent(){
-        return indentService.indentCountAll();
+    public CommonResult countAllIndent(IndentDetails indentDetails,String findKey,Integer index,Integer pageSize,String sort){
+        indentDetails.setoId(findKey);
+        indentDetails.setBuyerName(findKey);
+        indentDetails.setVendorName(findKey);
+        indentDetails.setProductName(findKey);
+        return indentService.indentCountAll(indentDetails,sort);
     }
 
     //分页计算买家个人订单页数
     @GetMapping("/countBuyer")
-    public CommonResult countBuyerIndent(Long buyerId){
-        return indentService.countBuyerIndent(buyerId);
+    public CommonResult countBuyerIndent(Long buyerId,Integer pageSize){
+        return indentService.countBuyerIndent(buyerId,pageSize);
     }
 
 
@@ -123,14 +144,14 @@ public class IndentController {
         return indentService.countBuyerAllIndent(buyerId);
     }
 
-    //分页计算买家个人订单页数
+    //分页计算卖家个人订单页数
     @GetMapping("/countVendor")
-    public CommonResult countVendorIndent(Long vendorId){
-        return indentService.countVendorIndent(vendorId);
+    public CommonResult countVendorIndent(Long vendorId,Integer pageSize){
+        return indentService.countVendorIndent(vendorId,pageSize);
     }
 
 
-    //计算买家订单总数
+    //计算卖家订单总数
     @GetMapping("countVendorAll")
     public CommonResult countVendorAllIndent(Long vendorId){
         return indentService.countVendorAllIndent(vendorId);

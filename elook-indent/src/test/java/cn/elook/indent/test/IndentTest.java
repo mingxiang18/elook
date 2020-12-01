@@ -2,6 +2,7 @@ package cn.elook.indent.test;
 
 
 import cn.elook.common.entity.Indent;
+import cn.elook.common.entity.IndentDetails;
 import cn.elook.common.utils.CommonResult;
 import cn.elook.indent.ElookIndentApplication;
 import cn.elook.indent.service.IndentService;
@@ -34,8 +35,8 @@ public class IndentTest {
         Indent indent = new Indent();
         indent.setVendorId(2L);
         indent.setBuyerId(1L);
-        indent.setAddress("广东省湛江市广东海洋大学海思B555");
-        indent.setIndentPrice(666.0f);
+        indent.setAddress("广东省湛江市广东海洋大学海思eggg");
+        indent.setIndentPrice(86.0f);
         Date date = new Date();
         indent.setIndentCreateTime(date);
         String year=String.format("%tY", date);
@@ -44,7 +45,7 @@ public class IndentTest {
         String rand1 = RandomStringUtils.randomAlphanumeric(3);
         String rand2 = RandomStringUtils.randomAlphanumeric(3);
         indent.setIndentState(1);
-        indent.setpId(2l);
+        indent.setpId(14l);
         String idString = indent.getpId()+rand1+year+mon+day+rand2+indent.getBuyerId();
         indent.setoId(idString);
         indentService.saveIndent(indent);
@@ -93,7 +94,23 @@ public class IndentTest {
 
     @Test
     public void IndentCount(){
-        CommonResult commonResult = indentService.indentCount();
+        IndentDetails indent = new IndentDetails();
+        indent.setoId("裤子");
+//       indent.setVendorId(1l);
+//        indent.setBuyerId(2l);
+//        indent.setIndentState(2);
+//        indent.setpId(3l);
+//        indent.setIndentState(0);
+        indent.setProductName("裤子");
+        indent.setBuyerName("裤子");
+        indent.setVendorName("裤子");
+        CommonResult commonResult = indentService.indentCount(indent,10,"desc");
+        System.out.println(commonResult.getData());
+    }
+
+    @Test
+    public void BuyerIndentCount(){
+        CommonResult commonResult = indentService.countBuyerIndent(1l,10);
         System.out.println(commonResult.getData());
     }
 
@@ -106,6 +123,26 @@ public class IndentTest {
         String rand1= RandomStringUtils.randomAlphanumeric(3);
         System.out.println(year+mon+day+rand1);
 
+    }
+
+    @Test
+    public void getByAny(){
+        IndentDetails indent = new IndentDetails();
+        indent.setoId("裤子");
+//       indent.setVendorId(1l);
+//        indent.setBuyerId(2l);
+//        indent.setIndentState(2);
+//        indent.setpId(3l);
+//        indent.setIndentState(0);
+        indent.setProductName("裤子");
+        indent.setBuyerName("裤子");
+        indent.setVendorName("裤子");
+        CommonResult commonResult = indentService.getIndentDetailByAny(indent,0,10,"desc");
+//        System.out.println(commonResult.getData());
+        List<IndentDetails> indentDetailsList = (List<IndentDetails>)commonResult.getData();
+        for(IndentDetails ind : indentDetailsList){
+            System.out.println(ind);
+        }
     }
 
 
