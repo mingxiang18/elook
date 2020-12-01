@@ -1,6 +1,7 @@
 package cn.elook.product.controller;
 
 import cn.elook.common.entity.Product;
+import cn.elook.common.utils.CommonResult;
 import cn.elook.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +21,13 @@ public class ProductController {
     }
 
     @GetMapping("/product/{pid}")
-    public Product getProductById(@PathVariable("pid") Long pid){
-        return productService.getProductById(pid);
+    public CommonResult getProductById(@PathVariable("pid") Long pid){
+        Product product = productService.getProductById(pid);
+        if(product != null){
+            return new CommonResult(200,"查询成功",product);
+        }else {
+            return new CommonResult(444,"查询没有结果",product);
+        }
     }
 
     @GetMapping("/product/search")
