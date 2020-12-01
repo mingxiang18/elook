@@ -24,7 +24,7 @@ public class ElookProductTest {
 
     @Test
     public void test0() {
-        CommonResult productList = productService.getMall();
+        //CommonResult productList = productService.getMall();
         System.out.println();
     }
 
@@ -36,7 +36,7 @@ public class ElookProductTest {
 
     @Test
     public void test2() {
-        CommonResult productList = productService.getProductByCondition(null,null,0,10);
+        CommonResult productList = productService.getProductByCondition(null,null,0,10,-1);
         System.out.println(productList.getData());
     }
 
@@ -126,7 +126,7 @@ public class ElookProductTest {
 
     @Test
     public void test14() {
-        CommonResult productCount  = productService.getProductCount();
+        CommonResult productCount  = productService.getProductCount(null,0l);
         System.out.println(productCount.getData());
     }
 

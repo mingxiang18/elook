@@ -23,6 +23,8 @@ public class ProductDetails {
 
     private Date productCreateTime;
 
+    private String productPhoto;
+
     @Override
     public String toString() {
         return "ProductDetails{" +
@@ -117,5 +119,13 @@ public class ProductDetails {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getProductPhoto() {
+        return productPhoto;
+    }
+
+    public void setProductPhoto(String productPhoto) {
+        this.productPhoto = productPhoto;
     }
 }

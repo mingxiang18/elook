@@ -6,7 +6,7 @@
 <mapper namespace="cn.elook.product.dao.ProductDao">
 
     <select id="getMall" resultType="cn.elook.common.entity.Product">
-        SELECT * FROM product limit 10
+        SELECT * FROM product limit 12
     </select>
 
     <select id="getProductById" resultType="cn.elook.common.entity.Product">
@@ -16,6 +16,9 @@
     <select id="getProductByCondition" resultType="cn.elook.common.entity.Product">
         SELECT * FROM product
         <where>
+            <if test="ifSold != null and ifSold != -1">
+                AND if_sold = #{ifSold}
+            </if>
             <if test="productKey != null and productKey != ''">
                 AND (product_name LIKE "%"#{productKey}"%"
                 OR product_des LIKE "%"#{productKey}"%")
@@ -38,7 +41,7 @@
                 OR product_des LIKE "%"#{productKey}"%")
             </if>
             <if test="pcid != null and pcid != 0">
-                AND pcid = #{pcid}
+                AND product.pcid = #{pcid}
             </if>
         </where>
         limit #{index},#{pageSize}
@@ -54,6 +57,15 @@
 
     <select id="getProductCount" resultType="Long">
         SELECT COUNT(*) FROM product
+        <where>
+            <if test="productKey != null and productKey != ''">
+                AND (product_name LIKE "%"#{productKey}"%"
+                OR product_des LIKE "%"#{productKey}"%")
+            </if>
+            <if test="pcid != null and pcid != 0">
+                AND pcid = #{pcid}
+            </if>
+        </where>
     </select>
 
     <insert id="addProduct" parameterType="cn.elook.common.entity.Product" useGeneratedKeys="true" keyProperty="pid">

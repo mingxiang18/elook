@@ -8,14 +8,14 @@ import java.util.List;
 
 public interface ProductService {
     //获取首页商品信息
-    CommonResult getMall();
+    CommonResult getMall(String productKey, Long pcid, Integer index, Integer pageSize, Integer ifSold);
 
     //通过id获取商品
     CommonResult getProductById(Long pid);
     //搜索商品，筛选商品
-    CommonResult getProductByCondition(String productKey, Long pcid, Integer index, Integer pageSize);
+    CommonResult getProductByCondition(String productKey, Long pcid, Integer index, Integer pageSize,Integer ifSold);
     //获取商品总数
-    CommonResult getProductCount();
+    CommonResult getProductCount(String productKey, Long pcid);
     //添加商品
     CommonResult addProduct(Product product, ProductPhoto productPhoto);
     //下架商品

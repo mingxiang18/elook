@@ -16,8 +16,8 @@ public class ProductController {
 
     //获取首页商品信息
     @GetMapping("/product/mall")
-    public CommonResult getMall(){
-        return productService.getMall();
+    public CommonResult getMall(String productKey, Long pcid, Integer index, Integer pageSize, Integer ifSold){
+        return productService.getMall(productKey,pcid,index,pageSize,ifSold);
     }
 
     //通过id获取商品
@@ -28,8 +28,8 @@ public class ProductController {
 
     //搜索商品，productKey是关键字模糊查询，pcid是按分类查询
     @GetMapping("/product/search")
-    public CommonResult getProductByCondition(String productKey, Long pcid, Integer index, Integer pageSize){
-        return productService.getProductByCondition(productKey,pcid,index,pageSize);
+    public CommonResult getProductByCondition(String productKey, Long pcid, Integer index, Integer pageSize, Integer ifSold){
+        return productService.getProductByCondition(productKey,pcid,index,pageSize,ifSold);
     }
 
     //搜索商品获取详情，productKey是关键字模糊查询，pcid是按分类查询
@@ -44,10 +44,10 @@ public class ProductController {
         return productService.getProductDetails(index, pageSize);
     }
 
-    //获取商品分页总数
+    //获取商品总数
     @GetMapping("/product/count")
-    public CommonResult getProductCount(){
-        return productService.getProductCount();
+    public CommonResult getProductCount(String productKey, Long pcid){
+        return productService.getProductCount(productKey, pcid);
     }
 
     //添加商品
