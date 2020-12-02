@@ -1,0 +1,30 @@
+server:
+  port: 8092
+
+spring:
+  #禁用缓存   spring.thymeleaf.cache=false
+  thymeleaf:
+    cache: false
+
+  # 上传单个文件总的最大值=10MB
+  servlet:
+      multipart:
+        max-file-size: 10MB
+
+  datasource:
+#   数据源基本配置
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://8.129.53.24:3306/elook?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    type: com.alibaba.druid.pool.DruidDataSource
+
+# pagehelper
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+
+
