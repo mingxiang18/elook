@@ -82,7 +82,7 @@ public class IndentController {
 
     //添加订单
     @PostMapping("/add")
-    public CommonResult addIndent(Indent indent){
+    public CommonResult addIndent(@RequestBody Indent indent){
         Date date = new Date();
         indent.setIndentCreateTime(date);
         String year=String.format("%tY", date);

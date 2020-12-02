@@ -26,7 +26,11 @@
             <if test="pcid != null and pcid != 0">
                 AND pcid = #{pcid}
             </if>
+            <if test="uid != null and uid != 0">
+                AND uid = #{uid}
+            </if>
         </where>
+        ORDER BY product_create_time DESC
         limit #{index},#{pageSize}
     </select>
 
@@ -44,6 +48,7 @@
                 AND product.pcid = #{pcid}
             </if>
         </where>
+        ORDER BY product_create_time DESC
         limit #{index},#{pageSize}
     </select>
 
@@ -64,6 +69,12 @@
             </if>
             <if test="pcid != null and pcid != 0">
                 AND pcid = #{pcid}
+            </if>
+            <if test="ifSold != null and ifSold != -1">
+                AND if_sold = #{ifSold}
+            </if>
+            <if test="uid != null and uid != 0">
+                AND uid = #{uid}
             </if>
         </where>
     </select>

@@ -8,6 +8,9 @@ import cn.elook.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 @RestController
 @CrossOrigin
 public class ProductController {
@@ -20,6 +23,12 @@ public class ProductController {
         return productService.getMall(productKey,pcid,index,pageSize,ifSold);
     }
 
+    //搜索商品加封面图，productKey是关键字模糊查询，pcid是按分类查询
+    @GetMapping("/product/getMore")
+    public CommonResult getProductMoreByCondition(String productKey, Long pcid, Integer index, Integer pageSize, Integer ifSold, Long uid){
+        return productService.getProductMoreByCondition(productKey,pcid,index,pageSize,ifSold,uid);
+    }
+
     //通过id获取商品
     @GetMapping("/product/get")
     public CommonResult getProductById(Long pid){
@@ -28,8 +37,8 @@ public class ProductController {
 
     //搜索商品，productKey是关键字模糊查询，pcid是按分类查询
     @GetMapping("/product/search")
-    public CommonResult getProductByCondition(String productKey, Long pcid, Integer index, Integer pageSize, Integer ifSold){
-        return productService.getProductByCondition(productKey,pcid,index,pageSize,ifSold);
+    public CommonResult getProductByCondition(String productKey, Long pcid, Integer index, Integer pageSize, Integer ifSold, Long uid){
+        return productService.getProductByCondition(productKey,pcid,index,pageSize,ifSold,uid);
     }
 
     //搜索商品获取详情，productKey是关键字模糊查询，pcid是按分类查询
@@ -46,8 +55,8 @@ public class ProductController {
 
     //获取商品总数
     @GetMapping("/product/count")
-    public CommonResult getProductCount(String productKey, Long pcid){
-        return productService.getProductCount(productKey, pcid);
+    public CommonResult getProductCount(String productKey, Long pcid, Integer ifSold, Long uid){
+        return productService.getProductCount(productKey, pcid, ifSold, uid);
     }
 
     //添加商品
@@ -60,6 +69,12 @@ public class ProductController {
     @PostMapping("/product/rack")
     public CommonResult rackProduct(@RequestBody Product product){
         return productService.rackProduct(product.getPid());
+    }
+
+    //购买商品
+    @PostMapping("/product/buy")
+    public CommonResult buyProduct(@RequestBody Product product){
+        return productService.buyProduct(product);
     }
 
     //修改商品

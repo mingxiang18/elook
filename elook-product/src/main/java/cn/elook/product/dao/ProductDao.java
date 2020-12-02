@@ -10,14 +10,15 @@ public interface ProductDao {
     //获取首页商品信息
     List<Product> getMall(@Param("productKey") String productKey, @Param("pcid") Long pcid,
                           @Param("index") Integer index, @Param("pageSize") Integer pageSize);
-    //通过id获取商品
+    //通过pid获取商品
     Product getProductById(Long pid);
     //搜索商品，筛选商品
     List<Product> getProductByCondition(@Param("productKey") String productKey, @Param("pcid") Long pcid,
                                         @Param("index") Integer index, @Param("pageSize") Integer pageSize,
-                                        @Param("ifSold") Integer ifSold);
+                                        @Param("ifSold") Integer ifSold, @Param("uid") Long uid);
     //获取商品总数
-    Long getProductCount(@Param("productKey") String productKey,@Param("pcid") Long pcid);
+    Long getProductCount(@Param("productKey") String productKey,@Param("pcid") Long pcid,
+                         @Param("ifSold") Integer ifSold, @Param("uid") Long uid);
     //添加商品
     int addProduct(Product product);
     //下架商品

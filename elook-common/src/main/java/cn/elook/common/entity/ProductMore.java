@@ -1,6 +1,6 @@
 package cn.elook.common.entity;
 
-public class ProductMall {
+public class ProductMore {
     private Product product;
     private ProductPhoto productPhoto;
 

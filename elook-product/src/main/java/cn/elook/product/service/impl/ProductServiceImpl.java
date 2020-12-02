@@ -10,24 +10,27 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductDao productDao;
 
+    private ReentrantLock lock = new ReentrantLock();
+
     @Override
     public CommonResult getMall(String productKey, Long pcid, Integer index, Integer pageSize, Integer ifSold) {
-        List<Product> productList = productDao.getProductByCondition(productKey, pcid, index, pageSize,ifSold);
-        List<ProductMall> productMall = new ArrayList<>();
+        List<Product> productList = productDao.getProductByCondition(productKey, pcid, index, pageSize,ifSold,null);
+        List<ProductMore> productMore = new ArrayList<>();
         for (int i = 0; i < productList.size();i++){
-            ProductMall product = new ProductMall();
+            ProductMore product = new ProductMore();
             product.setProduct(productList.get(i));
             product.setProductPhoto(productDao.getOneProductPhotoByPid(productList.get(i).getPid()));
-            productMall.add(product);
+            productMore.add(product);
         }
         if(productList != null){
-            return new CommonResult(200,"商城数据加载成功",productMall);
+            return new CommonResult(200,"商城数据加载成功",productMore);
         }else {
             return new CommonResult(444,"无商城数据");
         }
@@ -44,8 +47,27 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public CommonResult getProductByCondition(String productKey, Long pcid, Integer index, Integer pageSize,Integer ifSold) {
-        List<Product> productList = productDao.getProductByCondition(productKey, pcid, index, pageSize,ifSold);
+    public CommonResult getProductMoreByCondition(String productKey, Long pcid, Integer index, Integer pageSize,Integer ifSold, Long uid) {
+        List<Product> products = productDao.getProductByCondition(productKey,pcid,index,pageSize,ifSold,uid);
+
+        List<ProductMore> productMore = new ArrayList<>();
+        for (int i = 0; i < products.size(); i++){
+            ProductMore product = new ProductMore();
+            product.setProduct(products.get(i));
+            product.setProductPhoto(productDao.getOneProductPhotoByPid(products.get(i).getPid()));
+            productMore.add(product);
+        }
+
+        if(products != null){
+            return new CommonResult(200,"查询成功",productMore);
+        }else {
+            return new CommonResult(444,"没有商品");
+        }
+    }
+
+    @Override
+    public CommonResult getProductByCondition(String productKey, Long pcid, Integer index, Integer pageSize,Integer ifSold, Long uid) {
+        List<Product> productList = productDao.getProductByCondition(productKey, pcid, index, pageSize,ifSold,uid);
         if(productList != null){
             return new CommonResult(200,"查询成功",productList);
         }else {
@@ -54,8 +76,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public CommonResult getProductCount(String productKey, Long pcid) {
-        Long result = productDao.getProductCount(productKey,pcid);
+    public CommonResult getProductCount(String productKey, Long pcid, Integer ifSold, Long uid) {
+        Long result = productDao.getProductCount(productKey,pcid,ifSold,uid);
         if(result > 0){
             return new CommonResult(200,"获取商品总数成功",result);
         }else {
@@ -99,6 +121,20 @@ public class ProductServiceImpl implements ProductService {
             return new CommonResult(200,"下架成功",result);
         }else {
             return new CommonResult(444,"下架商品失败");
+        }
+    }
+
+    @Override
+    public CommonResult buyProduct(Product product) {
+        if (productDao.getProductById(product.getPid()).getIfSold() == 0){
+            int result = productDao.updateProduct(product);
+            if(result > 0){
+                return new CommonResult(200,"购买成功",result);
+            }else {
+                return new CommonResult(444,"购买商品失败");
+            }
+        }else {
+            return new CommonResult(444,"商品已经被购买");
         }
     }
 
