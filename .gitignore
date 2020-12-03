@@ -1,2 +1,8 @@
 /.idea/
 /elook-common/target/
+/elook-indent/target/
+/elook-parent/target/
+/elook-product/target/
+/elook-test/target/
+/elook-test-customer/target/
+/elook-user/target/

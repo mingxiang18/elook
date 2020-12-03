@@ -61,8 +61,8 @@ public class ProductController {
 
     //添加商品
     @PostMapping("/product/add")
-    public CommonResult addProduct(@RequestBody Product product, ProductPhoto productPhoto){
-        return productService.addProduct(product, productPhoto);
+    public CommonResult addProduct(@RequestBody Product product){
+        return productService.addProduct(product);
     }
 
     //下架商品

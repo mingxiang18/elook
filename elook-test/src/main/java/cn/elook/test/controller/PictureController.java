@@ -8,12 +8,14 @@ import cn.elook.common.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 //图片上传Controller
 @Controller
+@CrossOrigin
 public class PictureController {
 
 	private String IMAGE_SERVER_URL = "http://8.129.53.24:8888/";

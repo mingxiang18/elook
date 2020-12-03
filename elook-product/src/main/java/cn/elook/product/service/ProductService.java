@@ -19,7 +19,7 @@ public interface ProductService {
     //获取商品总数
     CommonResult getProductCount(String productKey, Long pcid, Integer ifSold, Long uid);
     //添加商品
-    CommonResult addProduct(Product product, ProductPhoto productPhoto);
+    CommonResult addProduct(Product product);
     //下架商品
     CommonResult rackProduct(Long pid);
     //购买商品

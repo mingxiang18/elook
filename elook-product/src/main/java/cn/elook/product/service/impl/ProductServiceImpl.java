@@ -96,31 +96,27 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public CommonResult addProduct(Product product, ProductPhoto productPhoto) {
+    public CommonResult addProduct(Product product) {
         product.setIfSold(0);
         product.setProductCreateTime(new Date());
         int result = productDao.addProduct(product);
         if(result <= 0){
             return new CommonResult(444,"添加商品失败",result);
         }
-        if(productPhoto != null && productPhoto.getProductSrc() != null){
-            productPhoto.setPid(product.getPid());
-            int result2 = productDao.addProductPhoto(productPhoto);
-            if (result2 <= 0){
-                return new CommonResult(444,"添加商品图片失败",result2);
-            }
-        }
-
-        return new CommonResult(200,"添加商品成功",result);
+        return new CommonResult(200,"添加商品成功",product.getPid());
     }
 
     @Override
     public CommonResult rackProduct(Long pid) {
-        int result = productDao.rackProduct(pid);
-        if(result > 0){
-            return new CommonResult(200,"下架成功",result);
+        if (productDao.getProductById(pid).getIfSold() == 0){
+            int result = productDao.rackProduct(pid);
+            if(result > 0){
+                return new CommonResult(200,"下架成功",result);
+            }else {
+                return new CommonResult(444,"下架商品失败");
+            }
         }else {
-            return new CommonResult(444,"下架商品失败");
+            return new CommonResult(444,"商品已经被购买");
         }
     }
 

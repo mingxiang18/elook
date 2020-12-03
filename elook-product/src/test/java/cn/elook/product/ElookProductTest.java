@@ -50,7 +50,7 @@ public class ElookProductTest {
         product.setUid(1l);
         product.setProductCreateTime(new Date());
 
-        CommonResult result = productService.addProduct(product,null);
+        CommonResult result = productService.addProduct(product);
         System.out.println(result.getData());
     }
 
