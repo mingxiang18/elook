@@ -61,9 +61,9 @@ public class IndentServiceImpl implements IndentService {
     public CommonResult saveIndent(Indent indent) {
         int result = indentDao.saveIndent(indent);
         if(result <= 0){
-            return new CommonResult(444,"添加订单失败",result);
+            return new CommonResult(444,"添加订单失败",indent);
         }
-        return new CommonResult(200,"添加订单成功",result);
+        return new CommonResult(200,"添加订单成功",indent);
     }
 
     @Override

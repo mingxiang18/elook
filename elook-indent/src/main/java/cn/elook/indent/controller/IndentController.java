@@ -112,7 +112,7 @@ public class IndentController {
 
     //分页计算页数
     @GetMapping("/count")
-    public CommonResult countIndent(IndentDetails indentDetails,String findKey,Integer index,Integer pageSize,String sort){
+    public CommonResult countIndent(IndentDetails indentDetails,String findKey,Integer pageSize,String sort){
         indentDetails.setoId(findKey);
         indentDetails.setBuyerName(findKey);
         indentDetails.setVendorName(findKey);
@@ -123,7 +123,7 @@ public class IndentController {
 
     //计算订单总数
     @GetMapping("countAll")
-    public CommonResult countAllIndent(IndentDetails indentDetails,String findKey,Integer index,Integer pageSize,String sort){
+    public CommonResult countAllIndent(IndentDetails indentDetails,String findKey,String sort){
         indentDetails.setoId(findKey);
         indentDetails.setBuyerName(findKey);
         indentDetails.setVendorName(findKey);
