@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xie.note.dao.NoteMapper">
+
+    <!--获取首页所有帖子项-->
+<select id="getAllNotes" resultMap="noteItem">
+SELECT  n.nid ,n.title,n.creat_time,
+  np.photo_src,n.uid,username,photo
+FROM note n
+  LEFT JOIN (SELECT b.npid,b.nid,b.photo_src FROM (SELECT min(npid) npid,nid from note_photo GROUP BY nid) a
+    LEFT JOIN note_photo b ON a.npid=b.npid) np ON n.nid = np.nid
+  LEFT JOIN user  ON n.uid = user.uid
+
+</select>
+    <resultMap id="noteItem" type="note">
+     <result column="nid" property="nid"></result>
+        <result column="title" property="title"></result>
+        <result column="creat_time" property="creatTime"></result>
+       <association property="user" javaType="User" >
+           <result column="uid" property="uid"></result>
+           <result column="username" property="username"></result>
+           <result column="photo" property="photo"></result>
+       </association>
+
+        <collection property="notePhotoList" ofType="notePhoto">
+            <result property="photoSrc" column="photo_src"></result>
+        </collection>
+
+    </resultMap>
+
+
+    <!--根据id获取帖子所有内容-->
+    <select id="getNoteByNid" resultMap="note"  parameterType="int">
+SELECT  n.nid ,n.title, n.content,
+  n.creat_time  ,np.photo_src,n.uid,
+  user.username,user.photo,
+  nc.nc_content,nc.nc_creat_time ,nc.uid cuid,
+  npd.product_src,
+  cmuser.uid cmUid, cmuser.username cmUsername,cmuser.photo cmPhoto
+FROM note n
+  LEFT JOIN note_photo np ON n.nid = np.nid
+  LEFT JOIN user  ON n.uid = user.uid
+  LEFT JOIN note_comment nc ON n.nid = nc.nid
+  LEFT JOIN note_product npd ON n.nid = npd.nid
+  LEFT JOIN user cmuser ON nc.uid = cmuser.uid
+WHERE n.nid= #{nid}
+    </select>
+    <resultMap id="note" type="note">
+        <result column="nid" property="nid"></result>
+        <result column="title" property="title"></result>
+        <result column="content" property="content"></result>
+        <result column="creat_time" property="creatTime"></result>
+        <association property="user" javaType="User" >
+            <result column="uid" property="uid"></result>
+            <result column="username" property="username"></result>
+            <result column="photo" property="photo"></result>
+        </association>
+
+        <collection property="notePhotoList" ofType="notePhoto">
+            <result property="photoSrc" column="photo_src"></result>
+        </collection>
+        <collection property="noteCommentList" ofType="noteComment">
+            <result property="ncContent" column="nc_content"></result>
+            <result property="ncCreatTime" column="nc_creat_time"></result>
+            <association property="user" javaType="User">
+                <result column="cmUid" property="uid"></result>
+                <result column="cmUsername" property="username"></result>
+                <result column="cmPhoto" property="photo"></result>
+            </association>
+
+        </collection>
+        <collection property="noteProductList" ofType="noteProduct">
+            <result property="productSrc" column="product_src"></result>
+        </collection>
+
+    </resultMap>
+
+<!--模糊查询功能实现-->
+ <select id="getAllNotesByCondition" resultMap="noteItem" >
+     SELECT  n.nid ,n.title,n.creat_time,
+     np.photo_src,n.uid,username,photo
+     FROM note n
+     LEFT JOIN (SELECT b.npid,b.nid,b.photo_src FROM (SELECT min(npid) npid,nid from note_photo GROUP BY nid) a
+     LEFT JOIN note_photo b ON a.npid=b.npid) np ON n.nid = np.nid
+     LEFT JOIN user  ON n.uid = user.uid
+  <where>
+      <if test="condition !=null">
+         AND n.title LIKE #{condition} OR user.username LIKE #{condition}
+      </if>
+  </where>
+ </select>
+
+
+    <!--分页查询功能-->
+    <select id="getAllNotesByPage" parameterType="int" resultMap="noteItem" >
+ SELECT  n.nid ,n.title,n.creat_time,
+  np.photo_src,n.uid,username,photo
+FROM note n
+  LEFT JOIN (SELECT b.npid,b.nid,b.photo_src FROM (SELECT min(npid) npid,nid from note_photo GROUP BY nid) a
+  LEFT JOIN note_photo b ON a.npid=b.npid) np ON n.nid = np.nid
+  LEFT JOIN user  ON n.uid = user.uid
+  limit #{index},#{count}
+
+    </select>
+
+
+    <!--根据用户id查询所有帖子-->
+<select id="getNotesByUid" parameterType="int" resultMap="noteItem">
+     SELECT  n.nid ,n.title,n.creat_time,
+  np.photo_src,n.uid,username,photo
+FROM note n
+  LEFT JOIN (SELECT b.npid,b.nid,b.photo_src FROM (SELECT min(npid) npid,nid from note_photo GROUP BY nid) a
+  LEFT JOIN note_photo b ON a.npid=b.npid) np ON n.nid = np.nid
+  LEFT JOIN user  ON n.uid = user.uid
+  WHERE n.uid=#{uid}
+
+</select>
+
+<!--删除帖子-->
+    <delete id="deleteNoteByNid" parameterType="int" >
+DELETE FROM note WHERE nid=#{nid}
+
+    </delete>
+<!--删除图片-->
+    <delete id="deletePhotoByNid" parameterType="int" >
+        DELETE FROM note_photo WHERE nid=#{nid}
+
+    </delete>
+
+<!--删除评论-->
+    <delete id="deleteCommentByNid" parameterType="int" >
+        DELETE FROM note_comment WHERE nid=#{nid}
+
+    </delete>
+<!--删除关联的商品-->
+    <delete id="deleteProductByNid" parameterType="int" >
+        DELETE FROM note_product WHERE nid=#{nid}
+
+    </delete>
+
+
+    <!--获取系统总页数-->
+<select id="countOfNotes" resultType="int">
+    SELECT count(*) FROM elook.note
+</select>
+
+
+    <!--获取模糊所搜总页数-->
+    <select id="countOfNotesByCondition" resultType="int" parameterType="string">
+        SELECT count(*)
+        FROM note n
+        LEFT JOIN user  ON n.uid = user.uid
+        <where>
+            <if test="condition !=null">
+                AND n.title LIKE #{condition} OR user.username LIKE #{condition}
+            </if>
+        </where>
+    </select>
+
+
+    <!--模糊查询分页获取帖子-->
+    <select id="getAllNotesByPageByCondition" parameterType="map" resultMap="noteItem" >
+        SELECT  n.nid ,n.title,n.creat_time,
+        np.photo_src,n.uid,username,photo
+        FROM note n
+        LEFT JOIN (SELECT b.npid,b.nid,b.photo_src FROM (SELECT min(npid) npid,nid from note_photo GROUP BY nid) a
+        LEFT JOIN note_photo b ON a.npid=b.npid) np ON n.nid = np.nid
+        LEFT JOIN user  ON n.uid = user.uid
+        <where>
+            <if test="condition !=null">
+                AND n.title LIKE #{condition} OR user.username LIKE #{condition}
+            </if>
+        </where>
+        limit #{index},#{count}
+    </select>
+</mapper>
