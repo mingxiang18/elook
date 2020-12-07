@@ -57,6 +57,11 @@ public class UserService {
         return users;
     }
 
+    //查询除了超级管理员的所有用户的所有信息
+    public List<User> selectAllUsers2(){
+        return userDao.selectAllUsers2();
+    }
+
     //根据用户名删除用户信息
     public void deleteUser(String username){
         userDao.deleteUser(username);
