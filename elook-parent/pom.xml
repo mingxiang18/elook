@@ -11,7 +11,8 @@
         <module>../elook-product</module>
 		<module>../elook-indent</module>
 		<module>../elook-user</module>
-	</modules>
+        <module>../elook-note</module>
+    </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>

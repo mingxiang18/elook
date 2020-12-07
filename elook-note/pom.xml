@@ -9,17 +9,12 @@
         <relativePath>../elook-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <packaging>war</packaging>
 
-    <artifactId>elook-test</artifactId>
+    <artifactId>elook-note</artifactId>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-    </properties>
 
     <dependencies>
+
         <dependency>
             <artifactId>elook-common</artifactId>
             <groupId>cn.group2</groupId>
@@ -52,16 +47,23 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <!--<version>5.1.45</version>-->
             <scope>runtime</scope>
         </dependency>
 
         <!--引入druid-->
-        <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
-        <!--<dependency>-->
-            <!--<groupId>com.alibaba</groupId>-->
-            <!--<artifactId>druid</artifactId>-->
-            <!--<version>1.1.8</version>-->
-        <!--</dependency>-->
+         <!--https://mvnrepository.com/artifact/com.alibaba/druid-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -74,39 +76,15 @@
             <version>2.2.1</version>
         </dependency>
 
-        <!--&lt;!&ndash; 提供zookeeper整合的包 &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>-->
-            <!--<version>2.2.4.RELEASE</version>-->
-        <!--</dependency>-->
 
-        <!--&lt;!&ndash; 热部署工具 &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-devtools</artifactId>-->
-        <!--</dependency>-->
 
-        <!--<dependency>-->
-            <!--<groupId>junit</groupId>-->
-            <!--<artifactId>junit</artifactId>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>fastdfs_client</groupId>
+            <artifactId>fastdfs_client</artifactId>
+            <version>1.25</version>
+        </dependency>
 
-        <!--&lt;!&ndash; 文件上传组件 &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>fastdfs_client</groupId>-->
-            <!--<artifactId>fastdfs_client</artifactId>-->
-            <!--<version>1.25</version>-->
-        <!--</dependency>-->
+
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>
