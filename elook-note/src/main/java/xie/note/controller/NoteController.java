@@ -96,4 +96,5 @@ public  CommonResult deleteNotesByNid(@PathVariable("nid") int nid){
         return noteService.getPageBeanByCondition(currentCount,currentPage,condition);
     }
 
+
     }

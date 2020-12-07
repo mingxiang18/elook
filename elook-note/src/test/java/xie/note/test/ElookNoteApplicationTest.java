@@ -46,24 +46,5 @@ DataSource dataSource;
 
     }
 
-@Test
-public void getAllNotes(){
-    List<note> allNotes = noteMapper.getAllNotes();
-    System.out.println(allNotes);
-//    List<note> allNotes = noteService.getAllNotes();
-//    System.out.println(allNotes);
-//    List<note> allNotesByCondition = noteMapper.getAllNotesByCondition("%张三%");
-//    System.out.println(allNotesByCondition);
-//    CommonResult s = noteService.getNotesByCondition("帕梅拉  张三");
-//    System.out.println(s);
-//    List<note> a = noteMapper.getAllNotesByCondition("%aaaaaaaaaa%");
-//    if (a!=null){
-//        System.out.println(a.size());
-//        System.out.println(a);
-//    }
-//    else{
-//        System.out.println("是空的");
-//    }
 
-}
 }
