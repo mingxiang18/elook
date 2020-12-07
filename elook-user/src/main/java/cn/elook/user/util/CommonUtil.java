@@ -35,12 +35,12 @@ public class CommonUtil {
         validate = capText;
 
         //创建一个两分钟有效
-        System.out.println("验证码时间生成");
+//        System.out.println("验证码时间生成");
         long validTime = System.currentTimeMillis() + 120000;
 
         // store the text in the session
         HttpSession session = request.getSession();
-        System.out.println("生成验证码里的session：" + session);
+//        System.out.println("生成验证码里的session：" + session);
         session.setAttribute(validateSessionKey, capText);
         session.setAttribute("validTime",validTime);
 

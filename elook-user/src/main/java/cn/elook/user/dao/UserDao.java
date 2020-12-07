@@ -36,16 +36,20 @@ public interface UserDao {
     @Select("select * from user")
     public List<User> selectAllUsers();
 
+    //查询除了超级管理员的所有用户的所有信息
+    @Select("select * from user where level = 0")
+    public List<User> selectAllUsers2();
+
     //根据用户名删除用户信息
     @Delete("delete from user where username = #{username}")
     public void deleteUser(String username);
 
     //分页查询用户
-    @Select("select * from user")
+    @Select("select * from user where level = 0")
     public List<User> pagingSelectUsers();
 
     //对用户名和手机号码进行模糊查询
-    @Select("select * from user where (username like concat('%',#{keyword},'%')) or (phone like concat('%',#{keyword},'%')) ")
+    @Select("select * from user where ((username like concat('%',#{keyword},'%')) or (phone like concat('%',#{keyword},'%'))) and level = 0 ")
     public List<User> fuzzySelectUsers(String keyword);
 
 }

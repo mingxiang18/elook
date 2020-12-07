@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 //图片上传Controller
 @Controller
-@CrossOrigin
+@CrossOrigin(allowCredentials="true",maxAge = 3600)
 public class PictureController {
 
 	private String IMAGE_SERVER_URL = "http://8.129.53.24:8888/";
