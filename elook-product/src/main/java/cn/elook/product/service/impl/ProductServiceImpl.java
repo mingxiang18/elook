@@ -4,6 +4,7 @@ import cn.elook.common.entity.*;
 import cn.elook.common.utils.CommonResult;
 import cn.elook.product.dao.ProductDao;
 import cn.elook.product.service.ProductService;
+import cn.elook.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductDao productDao;
-
-    private ReentrantLock lock = new ReentrantLock();
 
     @Override
     public CommonResult getMall(String productKey, Long pcid, Integer index, Integer pageSize, Integer ifSold) {
@@ -208,6 +207,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public CommonResult getProductDiscussByPid(Long pid) {
         List<ProductDiscuss> productDiscussList = productDao.getProductDiscussByPid(pid);
+
         if(productDiscussList != null){
             return new CommonResult(200,"获取商品留言成功",productDiscussList);
         }else {

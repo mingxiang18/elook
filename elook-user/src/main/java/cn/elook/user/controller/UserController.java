@@ -19,7 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/user")
-//@CrossOrigin(allowCredentials="true",maxAge = 3600)
+@CrossOrigin(allowCredentials="true",maxAge = 3600)
 public class UserController {
     @Autowired
     private UserService userService;
@@ -30,9 +30,9 @@ public class UserController {
 
     //测试
     @RequestMapping("/nicetomeetyou")
-    public void hello(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        request.getSession().setAttribute("testSession","测试session成功");
-        response.sendRedirect("http://127.0.0.1:5500/login.html");
+    public void hello(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
+        request.getRequestDispatcher("/").forward(request,response);
+
     }
 
     //根据用户名验证用户是否存在
@@ -41,13 +41,10 @@ public class UserController {
     public CommonResult isUsernameExist(String username,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = userService.selectUserByUsername(username);
         CommonResult<Object> result = new CommonResult<>();
-        if(user != null){//用户不存在时
+        if(user != null){//用户存在时
             result.setCode(201);
             result.setMessage("用户名已存在，可直接登录");
-        }else{
-            //将用户名存好，等到插入数据用
-            HttpSession session = request.getSession();
-            session.setAttribute("username",username);
+        }else{//用户不存在时
             //如果用户不存在，那么存入一个标识，告诉前台跳转到下一个页面
             result.setCode(200);
             result.setMessage("用户名不存在，可以注册");
@@ -61,11 +58,12 @@ public class UserController {
      */
     @PostMapping("/checkRegister")
     @ResponseBody
-    public CommonResult checkRegister(HttpServletRequest request,String validateCode,String password) {
+    public CommonResult checkRegister(HttpServletRequest request,HttpServletResponse response,String validateCode,String password,String username) throws IOException {
+        System.out.println(username);
+        System.out.println(password);
+        System.out.println(validateCode);
         HttpSession session = request.getSession();
-        System.out.println("检查验证码和密码的session：" + session);
-//        String username = (String) session.getAttribute("username");
-        String username = "q1234";
+//        System.out.println("检查验证码和密码的session：" + session);
         CommonResult<Object> result = new CommonResult<>();
         //有效时间
         long validTime = Long.parseLong(String.valueOf(session.getAttribute("validTime")));
@@ -82,7 +80,7 @@ public class UserController {
                 user.setUsername(username);
                 user.setPassword(password);
                 userService.insertUser(user);
-                session.setAttribute("loginUser",user);
+//                session.setAttribute("loginUser",user);
                 result.setCode(202);
                 result.setMessage("注册成功");
             }else if(!loginValidateCode.equals(validateCode)){//验证码不正确
@@ -97,6 +95,8 @@ public class UserController {
     @PostMapping("/checkLogin")
     @ResponseBody
     public CommonResult checkLogin(String username,String password,HttpServletRequest request){
+        System.out.println(username);
+        System.out.println(password);
         User user = userService.selectUserByUnameAndPword(username, password);
         CommonResult<Object> result = new CommonResult<>();
         if(user == null){
@@ -110,10 +110,48 @@ public class UserController {
         return result;
     }
 
+    //登陆验证：当level为1的时候，即为管理员
+    @PostMapping("/checkLogin2")
+    @ResponseBody
+    public CommonResult checkLogin2(String username,String password,HttpServletRequest request){
+        System.out.println(username);
+        System.out.println(password);
+        User user = userService.selectUserByUnameAndPword(username, password);
+        CommonResult<Object> result = new CommonResult<>();
+        if(user == null){
+            result.setCode(200);
+            result.setMessage("用户名或密码错误");
+        }else {
+            Integer level = user.getLevel();
+            if(level == 1){
+                request.getSession().setAttribute("loginUser",user);
+                result.setCode(201);
+                result.setMessage("登录成功，整个用户信息已经存储在session中");
+            }else if(level == 0){
+                result.setCode(202);
+                result.setMessage("登录失败，该用户不是管理员");
+            }
+        }
+        return result;
+    }
+
     //根据用户名查询个人信息
     @GetMapping("/personalInForm")
     @ResponseBody
     public CommonResult personalInForm(String username){
+        User user = userService.selectUserByUsername(username);
+        CommonResult<Object> result = new CommonResult<>();
+        result.setCode(200);
+        result.setMessage("个人信息");
+        result.setData(user);
+        return result;
+    }
+
+    //根据用户名查询个人信息
+    @PostMapping("/personalInForm2")
+    @ResponseBody
+    public CommonResult personalInForm2(String username){
+        System.out.println(username);
         User user = userService.selectUserByUsername(username);
         CommonResult<Object> result = new CommonResult<>();
         result.setCode(200);
@@ -135,7 +173,7 @@ public class UserController {
     }
 
     /**
-     * 修改用户信息；
+     * 普通用户自身修改用户信息；
      * 修改的信息中，只有电话可能是重复的；
      * 只更改了电话、性别、头像
      * @param user
@@ -145,8 +183,9 @@ public class UserController {
     @PostMapping("/updateUserInfo")
     @ResponseBody
     public CommonResult updateUserInfo(User user,HttpServletRequest request){
+        System.out.println(user.getPhoto());
         CommonResult<Object> result = new CommonResult<>();
-        String phone1 = user.getPhone();    //用户重新输入的电话
+        String enterPhone = user.getPhone();    //用户重新输入的电话
         HttpSession session = request.getSession();
         User loginUser = (User) session.getAttribute("loginUser");
         //要把用户当前没改的信息放到新的user里
@@ -154,8 +193,22 @@ public class UserController {
         user.setUid(loginUser.getUid());
         user.setPassword(loginUser.getPassword());
         user.setLevel(loginUser.getLevel());
-        String phone = loginUser.getPhone();    //用户当前电话
-        if(phone.equals(phone1)){   //电话号码没有修改时
+        String currentPhone = loginUser.getPhone();    //用户当前电话
+        if(currentPhone == null){  //用户电话本身就是空的时候
+            //输入的电话来查询用户
+            User user2 = userService.selectUserByphone(enterPhone);
+            if(user2 == null){
+                //更新数据库用户数据
+                userService.updateUser(user);
+                //更新session中保存的登录的用户
+                session.setAttribute("loginUser",user);
+                result.setCode(200);
+                result.setMessage("电话没改，所以直接更新用户信息成功！");
+            }else {
+                result.setCode(202);
+                result.setMessage("电话号码已经存在，更新用户信息失败！");
+            }
+        }else if(currentPhone.equals(enterPhone)){   //电话号码没有修改时
             //更新数据库用户数据
             userService.updateUser(user);
             //更新session中保存的登录的用户
@@ -163,7 +216,7 @@ public class UserController {
             result.setCode(200);
             result.setMessage("电话没改，所以直接更新用户信息成功！");
         }else {
-            User user1 = userService.selectUserByphone(phone1);
+            User user1 = userService.selectUserByphone(enterPhone);
             if(user1 == null){  //电话号码没被注册时
                 //更新数据库用户数据
                 userService.updateUser(user);
@@ -179,16 +232,39 @@ public class UserController {
         return result;
     }
 
+    /**
+     * 超级管理员修改用户信息
+     * @param user
+     * @param request
+     * @return
+     */
+    @PostMapping("/updateUserInfo2")
+    @ResponseBody
+    public CommonResult updateUserInfo2(User user,HttpServletRequest request){
+        CommonResult<Object> result = new CommonResult<>();
+        System.out.println(user);
+        userService.updateUser(user);
+        result.setCode(200);
+        result.setMessage("更新成功！");
+        return result;
+    }
+
     //修改密码
     @PostMapping("/changePassword")
     @ResponseBody
     public CommonResult changePassword(String oldPassword,String newPassword,HttpServletRequest request){
         CommonResult<Object> result = new CommonResult<>();
         User loginUser = (User) request.getSession().getAttribute("loginUser");
-        String username = loginUser.getUsername();
-        userService.changePassword(newPassword,username);
-        result.setCode(200);
-        result.setMessage("修改密码成功！");
+        String nowPassword = loginUser.getPassword();
+        if(nowPassword.equals(oldPassword)){
+            String username = loginUser.getUsername();
+            userService.changePassword(newPassword,username);
+            result.setCode(200);
+            result.setMessage("修改密码成功！");
+        }else {
+            result.setCode(201);
+            result.setMessage("修改密码失败！");
+        }
         return result;
     }
 
@@ -198,6 +274,18 @@ public class UserController {
     public CommonResult selectAllUsers(){
         CommonResult<Object> result = new CommonResult<>();
         List<User> users = userService.selectAllUsers();
+        result.setCode(200);
+        result.setMessage("查询所有用户的所有信息成功！");
+        result.setData(users);
+        return result;
+    }
+
+    //显示除了超级管理员的所有用户的所有信息
+    @GetMapping("/users2")
+    @ResponseBody
+    public CommonResult selectAllUsers2(){
+        CommonResult<Object> result = new CommonResult<>();
+        List<User> users = userService.selectAllUsers2();
         result.setCode(200);
         result.setMessage("查询所有用户的所有信息成功！");
         result.setData(users);
@@ -256,4 +344,16 @@ public class UserController {
         return result;
     }
 
+    //根据主键获取用户信息
+    @GetMapping("/getUser")
+    @ResponseBody
+    public CommonResult getUser(Long uid){
+        CommonResult<User> result = new CommonResult<>();
+        User user = userService.selectUserByUid(uid);
+        user.setPassword(null);
+        result.setCode(200);
+        result.setMessage("获取用户成功！");
+        result.setData(user);
+        return result;
+    }
 }

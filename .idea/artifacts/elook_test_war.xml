@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="elook-test:war">
-    <output-path>$PROJECT_DIR$/elook-test/target</output-path>
-    <root id="archive" name="elook-test-0.0.1-SNAPSHOT.war">
-      <element id="artifact" artifact-name="elook-test:war exploded" />
-    </root>
-  </artifact>
-</component>

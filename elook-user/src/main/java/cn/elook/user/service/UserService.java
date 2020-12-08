@@ -21,6 +21,12 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
+    //通过主键查询用户
+    public User selectUserByUid(Long uid){
+        User user = userDao.selectUserByUid(uid);
+        return user;
+    }
+
     //通过用户名查询用户
     public User selectUserByUsername(String username){
         User user = userDao.selectUserByUsername(username);
@@ -55,6 +61,11 @@ public class UserService {
     public List<User> selectAllUsers(){
         List<User> users = userDao.selectAllUsers();
         return users;
+    }
+
+    //查询除了超级管理员的所有用户的所有信息
+    public List<User> selectAllUsers2(){
+        return userDao.selectAllUsers2();
     }
 
     //根据用户名删除用户信息
