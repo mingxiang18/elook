@@ -8,6 +8,10 @@ import java.util.List;
 
 @Mapper
 public interface UserDao {
+    //通过主键查询用户
+    @Select("select * from user where uid = #{uid}")
+    public User selectUserByUid(Long uid);
+
     //通过用户名查询用户
     @Select("select * from user where username = #{username}")
     public User selectUserByUsername(String username);

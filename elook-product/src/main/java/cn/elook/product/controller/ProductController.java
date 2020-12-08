@@ -12,7 +12,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(allowCredentials="true",maxAge = 3600)
 public class ProductController {
     @Autowired
     private ProductService productService;
