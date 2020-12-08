@@ -344,6 +344,15 @@ public class UserController {
         return result;
     }
 
-    //没有用的，测试用的
+    //退出
+    @GetMapping("/exit")
+    @ResponseBody
+    public CommonResult exit(HttpServletRequest request){
+        CommonResult<Object> result = new CommonResult<>();
+        request.getSession().setAttribute("loginUser",null);
+        result.setCode(200);
+        result.setMessage("退出成功！");
+        return result;
+    }
 
 }
