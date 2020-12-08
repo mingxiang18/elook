@@ -1,7 +1,6 @@
 package xie.note.test;
 
-import cn.elook.common.entity.note;
-import cn.elook.common.utils.CommonResult;
+import cn.elook.common.entity.commentPo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import xie.note.service.NoteService;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.HashMap;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -45,6 +44,11 @@ DataSource dataSource;
 
 
     }
+@Test
+    public void uuid(){
 
+//    noteService.deleteComment(8);
+    noteMapper.deleteCommentByNcid(8);
+}
 
 }

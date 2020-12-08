@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(allowCredentials="true",maxAge = 3600)
 public class TestController {
     @Autowired
     private TestService testService;

@@ -344,6 +344,18 @@ public class UserController {
         return result;
     }
 
+    //根据主键获取用户信息
+    @GetMapping("/getUser")
+    @ResponseBody
+    public CommonResult getUser(Long uid){
+        CommonResult<User> result = new CommonResult<>();
+        User user = userService.selectUserByUid(uid);
+        user.setPassword(null);
+        result.setCode(200);
+        result.setMessage("获取用户成功！");
+        result.setData(user);
+        return result;
+    }
     //退出
     @GetMapping("/exit")
     @ResponseBody

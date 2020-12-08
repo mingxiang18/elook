@@ -21,6 +21,12 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
+    //通过主键查询用户
+    public User selectUserByUid(Long uid){
+        User user = userDao.selectUserByUid(uid);
+        return user;
+    }
+
     //通过用户名查询用户
     public User selectUserByUsername(String username){
         User user = userDao.selectUserByUsername(username);

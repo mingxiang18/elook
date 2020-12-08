@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(allowCredentials="true",maxAge = 3600)
 @RequestMapping("/indent")
 public class IndentController {
 
