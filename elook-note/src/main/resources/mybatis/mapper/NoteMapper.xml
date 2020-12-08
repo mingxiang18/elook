@@ -36,15 +36,18 @@ FROM note n
 SELECT  n.nid ,n.title, n.content,
   n.creat_time  ,np.photo_src,n.uid,
   user.username,user.photo,
-  nc.nc_content,nc.nc_creat_time ,nc.uid cuid,
-  npd.product_src,
-  cmuser.uid cmUid, cmuser.username cmUsername,cmuser.photo cmPhoto
+  nc.nc_content,nc.nc_creat_time ,nc.uid cuid,nc.ncid,
+  npd.pid,
+  cmuser.uid cmUid, cmuser.username cmUsername,cmuser.photo cmPhoto,
+pc.category_name
 FROM note n
   LEFT JOIN note_photo np ON n.nid = np.nid
   LEFT JOIN user  ON n.uid = user.uid
   LEFT JOIN note_comment nc ON n.nid = nc.nid
   LEFT JOIN note_product npd ON n.nid = npd.nid
   LEFT JOIN user cmuser ON nc.uid = cmuser.uid
+  LEFT JOIN elook.product p on npd.pid=p.pid
+  LEFT JOIN  elook.product_category pc on p.pcid=pc.pcid
 WHERE n.nid= #{nid}
     </select>
     <resultMap id="note" type="note">
@@ -62,6 +65,7 @@ WHERE n.nid= #{nid}
             <result property="photoSrc" column="photo_src"></result>
         </collection>
         <collection property="noteCommentList" ofType="noteComment">
+            <result property="ncid" column="ncid"></result>
             <result property="ncContent" column="nc_content"></result>
             <result property="ncCreatTime" column="nc_creat_time"></result>
             <association property="user" javaType="User">
@@ -72,7 +76,9 @@ WHERE n.nid= #{nid}
 
         </collection>
         <collection property="noteProductList" ofType="noteProduct">
-            <result property="productSrc" column="product_src"></result>
+            <result property="pid" column="pid"></result>
+            <result property="categoryName" column="category_name"></result>
+
         </collection>
 
     </resultMap>
@@ -175,4 +181,33 @@ DELETE FROM note WHERE nid=#{nid}
         </where>
         limit #{index},#{count}
     </select>
+    
+    <!--删除指定的评论-->
+    <delete id="deleteCommentByNcid" parameterType="int" >
+         DELETE FROM elook.note_comment WHERE ncid=#{ncid}
+
+
+    </delete>
+
+    <!--//    添加帖子-->
+    <insert id="addNote" parameterType="map" >
+      INSERT INTO elook.note (nid,title, content, creat_time, uid) VALUES (#{nid},#{note_title},#{note_content},#{creatTime},#{uid})
+    </insert>
+
+
+<!--添加评论-->
+    <insert id="addComment" parameterType="map">
+INSERT INTO elook.note_comment(nid, nc_content, nc_creat_time, uid) VALUES (#{nid},#{ncContent},#{creatTime},#{uid})
+    </insert>
+    <!--//    添加图片-->
+    <insert id="addNotePhoto" parameterType="map">
+INSERT INTO elook.note_photo(nid,photo_src) VALUES (#{nid},#{photoSrc})
+    </insert>
+     <!--添加关联的商品-->
+    <insert id="addNoteProduct" parameterType="map">
+INSERT INTO elook.note_product(nid,pid) VALUES (#{nid},#{pid})
+    </insert>
+
+    
+    
 </mapper>

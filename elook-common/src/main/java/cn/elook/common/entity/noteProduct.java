@@ -3,14 +3,16 @@ package cn.elook.common.entity;
 public class noteProduct {
     Integer npid;
     Integer nid;
-    String productSrc;
+    Integer pid;
+    String categoryName;
 
     @Override
     public String toString() {
         return "noteProduct{" +
                 "npid=" + npid +
                 ", nid=" + nid +
-                ", productSrc='" + productSrc + '\'' +
+                ", pid=" + pid +
+                ", categoryName='" + categoryName + '\'' +
                 '}';
     }
 
@@ -30,21 +32,30 @@ public class noteProduct {
         this.nid = nid;
     }
 
-    public String getProductSrc() {
-        return productSrc;
+    public Integer getPid() {
+        return pid;
     }
 
-    public void setProductSrc(String productSrc) {
-        this.productSrc = productSrc;
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public noteProduct() {
 
     }
 
-    public noteProduct(Integer npid, Integer nid, String productSrc) {
+    public noteProduct(Integer npid, Integer nid, Integer pid, String categoryName) {
         this.npid = npid;
         this.nid = nid;
-        this.productSrc = productSrc;
+        this.pid = pid;
+        this.categoryName = categoryName;
     }
 }

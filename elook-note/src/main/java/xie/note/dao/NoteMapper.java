@@ -48,8 +48,15 @@ public int countOfNotes();
     public  List<note> getAllNotesByPageByCondition(Map map);
 
 //    添加帖子
-//    添加评论
-//    添加图片
-//    添加关联商品
+     public  void  addNote(Map map);
+//添加评论
+     public  void addComment(Map map);
+// 删除指定的评论
+public int deleteCommentByNcid(@Param("ncid")int ncid);
+//添加帖子图片
+public  void  addNotePhoto(Map map);
+//添加帖子关联商品
+public  void  addNoteProduct(Map map);
+
 
 }

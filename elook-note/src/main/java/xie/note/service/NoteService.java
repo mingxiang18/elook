@@ -1,17 +1,17 @@
 package xie.note.service;
 
 import cn.elook.common.entity.PageBean;
+import cn.elook.common.entity.commentPo;
 import cn.elook.common.entity.note;
+import cn.elook.common.entity.notePo;
 import cn.elook.common.utils.CommonResult;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xie.note.dao.NoteMapper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
 @Service
 public class NoteService {
 @Autowired
@@ -162,7 +162,74 @@ public void deleteNoteByNid(int nid){
         return new CommonResult(200,"成功查询到符合条件的该页数据", pageBean);
     }
 
+//添加帖子的方法
+@Transactional
+public void addNotes(notePo notePo){
+//        先生成帖子id
+    Random random = new Random();
+    String str="";
+    for(int i=0;i<8;i++){
+        //首字母不能为0
+        str += (random.nextInt(9)+1);
+    }
+    int nid=Integer.parseInt(str);
 
+//    再生成日期
+    Date date = new Date();
+// 先写入帖子
+    HashMap map1 = new HashMap();
+    map1.put("nid",nid);
+    map1.put("note_title",notePo.getNote_title());
+    map1.put("note_content",notePo.getNote_content());
+    map1.put("creatTime",date);
+    map1.put("uid",notePo.getUid());
+    noteMapper.addNote(map1);
 
+//再写入图片
+    HashMap map2 = new HashMap();
+    List<String> photoUrl = notePo.getPhotoUrl();
+    for (String s : photoUrl) {
+        map2.put("nid",nid);
+        map2.put("photoSrc",s);
+        noteMapper.addNotePhoto(map2);
+    }
+
+//  写入关联商品
+//    需要判断一下关联商品是不是空的 如果是就不用调用mapper了
+    List<String> productList = notePo.getProductList();
+   List<String> pids = new ArrayList<>();
+    for (String s : productList) {
+          if (!s.equals("")){
+              pids.add(s);
+          }
+    }
+//    判断一下pids是不是空的
+    if (pids.size()!=0){
+    HashMap map3 = new HashMap();
+    for (String pid :  pids) {
+        map3.put("nid",nid);
+        map3.put("pid",pid);
+        noteMapper.addNotePhoto(map2);
+    }
+    }
+
+}
+
+@Transactional
+//添加评论的方法
+public void addComment(commentPo commentPo){
+    Date date = new Date();
+    HashMap map1 = new HashMap();
+    map1.put("nid",commentPo.getNid());
+    map1.put("uid",commentPo.getUid());
+    map1.put("ncContent",commentPo.getNcContent());
+    map1.put("creatTime",date);
+    noteMapper.addComment(map1);
+
+}
+//删除评论的方法
+    public  void deleteComment(int ncid){
+             noteMapper.deleteCommentByNcid(ncid);
+    }
 
 }
