@@ -176,7 +176,7 @@ DELETE FROM note WHERE nid=#{nid}
         LEFT JOIN user  ON n.uid = user.uid
         <where>
             <if test="condition !=null">
-                AND n.title LIKE #{condition} OR user.username LIKE #{condition}
+                AND n.title LIKE concat('%',#{condition},'%') OR user.username LIKE concat('%',#{condition},'%')
             </if>
         </where>
         limit #{index},#{count}

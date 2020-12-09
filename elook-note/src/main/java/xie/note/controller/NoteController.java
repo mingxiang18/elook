@@ -101,6 +101,8 @@ public  CommonResult deleteNotesByNid(@PathVariable("nid") int nid){
 }
 
 
+
+
 //    获得分页数据pageBean
     @ResponseBody
     @GetMapping("/getPageBean/{currentCount}/{currentPage}")

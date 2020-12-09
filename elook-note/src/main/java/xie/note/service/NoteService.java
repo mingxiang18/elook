@@ -134,7 +134,7 @@ public void deleteNoteByNid(int nid){
     }
 
     //分页获取模糊查询数据pageBean
-    public CommonResult getPageBeanByCondition(int currentCount,int currentPage,String condition){
+    public CommonResult getPageBeanByCondition(int currentCount,int currentPage,String condition) {
 
         PageBean pageBean = new PageBean();
         //		设置当前页面 页面显示数
@@ -142,24 +142,50 @@ public void deleteNoteByNid(int nid){
 //		pageBean.setCurrentPage(1);
         pageBean.setCurrentPage(currentPage);
 
-//		获得总条数
-        int count = noteMapper.countOfNotesByCondition(condition);
+
+        //        先判断有没有空格服 有就断成两个 查询两次
+        String[] split = condition.split(" +");
+
+        int count = 0;
+        for (String s : split) {
+            //		获得总条数
+            int tempcount = noteMapper.countOfNotesByCondition("%"+s+"%");
+            count = count + tempcount;
+
+        }
+
         pageBean.setTotalCount(count);
 //		设置总页数
-        int totalPage = (int) Math.ceil(1.0*count/pageBean.getCurrentCount());
+        int totalPage = (int) Math.ceil(1.0 * count / pageBean.getCurrentCount());
         pageBean.setTotalPage(totalPage);
 
 //		分页查询获得notesList
-        int index = (pageBean.getCurrentPage()-1)*(pageBean.getCurrentCount());
+        int index = (pageBean.getCurrentPage() - 1) * (pageBean.getCurrentCount());
         HashMap<String, Object> map = new HashMap<>();
-        map.put("index",index);
-        map.put("count",pageBean.getCurrentCount());
-        map.put("condition",condition);
-        List<note> allNotesByPageByCondition = noteMapper.getAllNotesByPageByCondition(map);
-//		设置pageBean的notesList
-        pageBean.setNotes(allNotesByPageByCondition);
+        map.put("index", index);
+        map.put("count", pageBean.getCurrentCount());
+        List<note> allNotes = new ArrayList<note>();
+        for (String s : split) {
+            map.put("condition", s);
+            List<note> allNotesByPageByCondition = noteMapper.getAllNotesByPageByCondition(map);
+            allNotes.addAll(allNotesByPageByCondition);
+        }
 
-        return new CommonResult(200,"成功查询到符合条件的该页数据", pageBean);
+//		设置pageBean的notesList
+
+            pageBean.setNotes(allNotes);
+
+
+
+         if (allNotes.size()==0){
+             return new CommonResult(444,"没有匹配的数据");
+         }
+         else{
+
+
+             return new CommonResult(200,"成功查询到符合条件的该页数据", pageBean);
+         }
+
     }
 
 //添加帖子的方法
