@@ -1,5 +1,6 @@
 package xie.note.dao;
 
+import cn.elook.common.entity.Product;
 import cn.elook.common.entity.note;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -58,5 +59,10 @@ public  void  addNotePhoto(Map map);
 //添加帖子关联商品
 public  void  addNoteProduct(Map map);
 
+public  int getProductCountByUid(int uid);
+//通过用户id获得所有的上架商品
+public List<Product> getProductsByUid(@Param("uid") int uid);
+    //    分页查询获取商品集合
+    public  List<Product> getProductBeanByPage(@Param("index") int index,@Param("count") int count,@Param("uid") int uid);
 
 }

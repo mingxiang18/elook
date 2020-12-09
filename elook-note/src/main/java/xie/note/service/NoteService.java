@@ -1,9 +1,6 @@
 package xie.note.service;
 
-import cn.elook.common.entity.PageBean;
-import cn.elook.common.entity.commentPo;
-import cn.elook.common.entity.note;
-import cn.elook.common.entity.notePo;
+import cn.elook.common.entity.*;
 import cn.elook.common.utils.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -223,21 +220,16 @@ public void addNotes(notePo notePo){
 //  写入关联商品
 //    需要判断一下关联商品是不是空的 如果是就不用调用mapper了
     List<String> productList = notePo.getProductList();
-   List<String> pids = new ArrayList<>();
-    for (String s : productList) {
-          if (!s.equals("")){
-              pids.add(s);
-          }
-    }
-//    判断一下pids是不是空的
-    if (pids.size()!=0){
+
+
     HashMap map3 = new HashMap();
-    for (String pid :  pids) {
+    for (String pid :  productList) {
+        System.out.println("商品橱窗的id"+pid);
         map3.put("nid",nid);
         map3.put("pid",pid);
-        noteMapper.addNotePhoto(map2);
+        noteMapper.addNoteProduct(map3);
     }
-    }
+
 
 }
 
@@ -257,5 +249,51 @@ public void addComment(commentPo commentPo){
     public  void deleteComment(int ncid){
              noteMapper.deleteCommentByNcid(ncid);
     }
+
+
+
+//    通过uid获得所有的商品
+public  CommonResult getProductsByUid(int uid){
+    List<Product> productsByUid = noteMapper.getProductsByUid(uid);
+    if (productsByUid.size()!=0){
+        return new CommonResult(200,"成功查询到商品集合",productsByUid);
+    }else{
+        return new CommonResult(444,"您还没有上架商品");
+    }
+
+
+}
+
+
+
+    //    通过uid获得所有的商品
+    public  CommonResult getProductBeanByPage(int currentPage,int currentCount,int uid){
+        ProductPageBean productPageBean = new ProductPageBean();
+        //		设置当前页面 页面显示数
+        productPageBean.setCurrentCount(currentCount);
+//		pageBean.setCurrentPage(1);
+        productPageBean.setCurrentPage(currentPage);
+
+//		获得总条数
+        int count = noteMapper.getProductCountByUid(uid);
+        productPageBean.setTotalCount(count);
+//		设置总页数
+        int totalPage = (int) Math.ceil(1.0*count/productPageBean.getCurrentCount());
+        productPageBean.setTotalPage(totalPage);
+
+//		分页查询获得notesList
+        int index = (productPageBean.getCurrentPage()-1)*(productPageBean.getCurrentCount());
+        List<Product> productBeanByPage = noteMapper.getProductBeanByPage(index, productPageBean.getCurrentCount(), uid);
+//		设置pageBean的notesList
+        productPageBean.setProducts(productBeanByPage);
+if (productBeanByPage.size()!=0){
+        return new CommonResult(200,"成功查询到该页的数据", productPageBean);
+}else{
+    return new CommonResult(444,"您没有上架的商品");
+}
+
+
+    }
+
 
 }

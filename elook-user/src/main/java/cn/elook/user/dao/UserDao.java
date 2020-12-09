@@ -2,7 +2,6 @@ package cn.elook.user.dao;
 
 import cn.elook.common.entity.User;
 import org.apache.ibatis.annotations.*;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ public interface UserDao {
 
     //根据用户名和密码查询用户
     @Select("select * from user where username=#{username} and password=#{password}")
-    public User selectUserByUnameAndPword(String username,String password);
+    public User selectUserByUnameAndPword(@Param("username") String username,@Param("password") String password);
 
     //更新用户个人信息（不含密码）
     @Update("update user set phone = #{phone},sex = #{sex},photo = #{photo} where username = #{username}")

@@ -208,6 +208,19 @@ INSERT INTO elook.note_photo(nid,photo_src) VALUES (#{nid},#{photoSrc})
 INSERT INTO elook.note_product(nid,pid) VALUES (#{nid},#{pid})
     </insert>
 
-    
-    
+    <!--通过用户id获取所有的上架商品-->
+    <select id="getProductsByUid"  resultType="cn.elook.common.entity.Product" parameterType="int">
+       SELECT * FROM  product where uid=#{uid}
+    </select>
+
+    <!--通过用户id获取所有的上架商品分页获取-->
+    <select id="getProductBeanByPage"  resultType="cn.elook.common.entity.Product" parameterType="int">
+        SELECT * FROM  product where uid=#{uid}
+        limit #{index},#{count}
+    </select>
+
+    <select id="getProductCountByUid" parameterType="int" resultType="int">
+         SELECT count(*) FROM  product where uid=#{uid}
+    </select>
+
 </mapper>

@@ -163,4 +163,19 @@ public  CommonResult deleteNotesByNid(@PathVariable("nid") int nid){
         }
         return new CommonResult(200, "删除评论成功");
     }
+
+////    通过用户id获得所有的上架商品
+//    @ResponseBody
+//    @GetMapping ("/getProductByUid/{currentPage}/{currentCount}/{uid}")
+//public CommonResult getProductByUid(@PathVariable("currentPage") int currentPage,@PathVariable("currentCount") int currentCount ,@PathVariable("uid") int uid){
+//        return   noteService.getProductBeanByPage(currentPage,currentCount,uid);
+//    }
+
+    //    通过用户id获得所有的上架商品
+    @ResponseBody
+    @GetMapping ("/getProductByUid//{uid}")
+    public CommonResult getProductByUid (@PathVariable("uid") int uid){
+        return   noteService.getProductsByUid(uid);
+    }
 }
+
